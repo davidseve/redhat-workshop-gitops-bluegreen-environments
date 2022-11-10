@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Setup :: Template Tutorial</title>
+    <title>Untitled :: Template Tutorial</title>
     <link rel="canonical" href="https://redhat-scholars.github.io/course-template/template-tutorial/01-setup.html">
     <link rel="prev" href="index.html">
-    <link rel="next" href="02-deploy.html">
+    <link rel="next" href="03-blue-green.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
   </head>
@@ -53,27 +53,43 @@
 <ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="01-setup.html">1. Setup</a>
+    <a class="nav-link" href="01-setup.html">1. Environment Setup</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#prerequisite">Prerequisites</a>
+    <a class="nav-link" href="#01-prerequisites">1.1 Prerequisites</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#minikube">Setup Minikube</a>
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="#01-laboratory">1.2 Laboratory</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#01-parameters">1.2.1 Parameters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#01-accessoc">1.2.2 Access - OC Client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="#01-accessconsole">1.2.3 Access - OCP Console</a>
   </li>
 </ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="03-blue-green.html">3. Cloud Native Blue/Green Deployment Strategy</a>
   </li>
   <li class="nav-item" data-depth="1">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="02-deploy.html">2. Deploy Service</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-deploy.html#package">Build Service</a>
+    <span class="nav-text">xref:04-deploy-shop.adoc[4. Deploy Shop Application</span>
   </li>
-  <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="02-deploy.html#deploy">Deploy Dervice</a>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-promote-stage.html">5. Promote new version to Stage environment</a>
   </li>
-</ul>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-promote-production.html">6. Promote new version to Production environment</a>
   </li>
 </ul>
   </li>
@@ -90,284 +106,258 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Template Tutorial</a></li>
-    <li><a href="01-setup.html">1. Setup</a></li>
+    <li><a href="01-setup.html">1. Environment Setup</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="https://github.com/davidseve/redhat-workshop-gitops-bluegreen-environments/edit/master/documentation/modules/ROOT/pages/01-setup.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Setup</h1>
+<div class="paragraph">
+<p>TODO
+= Environment Setup</p>
+</div>
 <div class="sect1">
-<h2 id="prerequisite"><a class="anchor" href="#prerequisite"></a>Prerequisite CLI tools</h2>
+<h2 id="01-prerequisites"><a class="anchor" href="#01-prerequisites"></a>Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following CLI tools are required for running the exercises in this tutorial.
-Please have them installed and configured before you get started with any of the tutorial chapters.</p>
+<p>During this tutorial, it will be required to work with different tools for running the exercises included. Please install the following software:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 20%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-center valign-top"><strong>Tool</strong></th>
-<th class="tableblock halign-center valign-top"><strong>macOS</strong></th>
 <th class="tableblock halign-center valign-top"><strong>Fedora</strong></th>
-<th class="tableblock halign-center valign-top"><strong>windows</strong></th>
+<th class="tableblock halign-center valign-top"><strong>macOS</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Windows</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Official Documentation</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>Git</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://git-scm.com/download/mac">Download</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">oc</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz">Download</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-mac.tar.gz">Download</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-windows.zip">Download</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://docs.openshift.com/container-platform/4.6/cli_reference/openshift_cli/getting-started-cli.html">OpenShift CLI - Docs</a></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">git</p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://git-scm.com/download/linux">Download</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://git-scm.com/download/mac">Download</a></p></td>
 <td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://git-scm.com/download/win">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>Docker</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://docs.docker.com/docker-for-mac/install">Docker for Mac</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>dnf install docker</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://docs.docker.com/docker-for-windows/install">Docker for Windows</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>VirtualBox</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://download.virtualbox.org/virtualbox/6.1.6/VirtualBox-6.1.6-137129-OSX.dmg">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://www.virtualbox.org/wiki/Linux_Downloads">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://download.virtualbox.org/virtualbox/6.1.6/VirtualBox-6.1.6-137129-Win.exe">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://kubernetes.io/docs/tasks/tools/install-minikube">Minikube</a> v1.25.1</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/kubernetes/minikube/releases/download/v1.25.1/minikube-darwin-amd64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/kubernetes/minikube/releases/download/v1.25.1/minikube-linux-amd64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/kubernetes/minikube/releases/download/v1.25.1/minikube-windows-amd64.exe">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>kubectl v1.23.1</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://storage.googleapis.com/kubernetes-release/release/v1.23.1/bin/darwin/amd64/kubectl">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://storage.googleapis.com/kubernetes-release/release/v1.23.1/bin/linux/amd64/kubectl">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://storage.googleapis.com/kubernetes-release/release/v1.23.1/bin/windows/amd64/kubectl.exe">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/wercker/stern">stern</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install stern</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/wercker/stern/releases/download/1.11.0/stern_windows_amd64.exe">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>Apache Maven 3.6.3</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.zip">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://archive.apache.org/dist/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz">Download</a></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://git-scm.com">Git - Docs</a></p></td>
 </tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p>The following CLI tools are optional for running the exercises in this tutorial.
-Although they are used in the tutorial, you could use others without any problem.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Please review the official documentation to install the latest versions of these tools on your laptop following the optimum procedure
+</td>
+</tr>
+</table>
 </div>
-<table class="tableblock frame-all grid-all stretch">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-center valign-top"><strong>Tool</strong></th>
-<th class="tableblock halign-center valign-top"><strong>macOS</strong></th>
-<th class="tableblock halign-center valign-top"><strong>Fedora</strong></th>
-<th class="tableblock halign-center valign-top"><strong>windows</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/mikefarah/yq">yq v2.4.1</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/mikefarah/yq/releases/download/2.4.1/yq_darwin_amd64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/mikefarah/yq/releases/download/2.4.1/yq_linux_amd64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/mikefarah/yq/releases/download/2.4.1/yq_windows_amd64.exe">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/stedolan/jq">jq v1.6.0</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/stedolan/jq/releases/download/jq-1.6/jq-osx-amd64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/stedolan/jq/releases/download/jq-1.6/jq-win64.exe">Download</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://httpie.org/">httpie</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install httpie</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>dnf install httpie</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://httpie.org/doc#windows-etc" class="bare">https://httpie.org/doc#windows-etc</a></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">watch</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install watch</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>dnf install procps-ng</code></p></td>
-<td class="tableblock halign-center valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">kubectx and kubens</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install kubectx</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/ahmetb/kubectx" class="bare">https://github.com/ahmetb/kubectx</a></p></td>
-<td class="tableblock halign-center valign-top"></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://github.com/rakyll/hey">hey</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><code>brew install hey</code></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://storage.googleapis.com/jblabs/dist/hey_linux_v0.1.2">Download</a></p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><a href="https://hey-release.s3.us-east-2.amazonaws.com/hey_windows_amd64">Download</a></p></td>
-</tr>
-</tbody>
-</table>
+<div class="paragraph">
+<p>It is also required to have a <a href="https://github.com">GitHub</a> account in order to create some repositories during this tutorial.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="minikube"><a class="anchor" href="#minikube"></a>Setup Kubernetes</h2>
+<h2 id="01-laboratory"><a class="anchor" href="#01-laboratory"></a>Laboratory</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The profile my_profile is created to run the tutorial:</p>
+<p>The technical exercises included in this tutorial are based on cloud native solutions which are extensively used in the IT market. Please review the following list which includes the basics around these cloud native solutions:</p>
 </div>
-<div class="tabset is-loading">
-<div class="ulist tabs">
+<div class="ulist">
 <ul>
 <li>
-<p><a id="tabset1_minikube"></a>Minikube</p>
+<p><a href="https://github.com/">GitHub</a> is a provider of Internet hosting for software development and version control using Git. It offers the distributed version control and source code management functionality of Git, plus its own features.</p>
 </li>
 <li>
-<p><a id="tabset1_openshift"></a>OpenShift</p>
+<p><a href="https://docs.openshift.com/container-platform/">Red Hat Openshift Container Platform Cluster</a> is an enterprise-ready Kubernetes container platform with full-stack automated operations to manage hybrid cloud, multicloud, and edge deployments. Red Hat OpenShift is optimized to improve developer productivity and promote innovation.</p>
+</li>
+<li>
+<p><a href="https://argoproj.github.io/argo-cd/">ArgoCD</a> is a declarative, GitOps continuous delivery tool for Kubernetes following the GitOps pattern of using Git repositories as the source of truth for defining the desired application state. Argo CD automates the deployment of the desired application states in the specified target environments. Application deployments can track updates to branches, tags, or pinned to a specific version of manifests at a Git commit.</p>
+</li>
+<li>
+<p><a href="https://helm.sh/">Helm</a> is a tool to find, share, and use software built for Kubernetes. Helm helps users manage Kubernetes applications in terms of definition, installing, and upgrading even the most complex Kubernetes application.</p>
+</li>
+<li>
+<p><a href="https://tekton.dev/">Tekton</a> (Red Hat Pipelines Operator) is a powerful and flexible open-source framework for creating CI/CD systems, allowing developers to build, test, and deploy across cloud providers and on-premise systems.</p>
 </li>
 </ul>
 </div>
-<div class="content">
-<div class="tab-pane" aria-labelledby="tabset1_minikube">
 <div class="paragraph">
-<p>Having <code>minikube</code> installed and in your <code>PATH</code>, then run:</p>
+<p>During this tutorial, a set of resources are provided by the instructor in order to be able to complete the exercises described in the following sections. The main objective of these resources is to provide a platform, multiple templates and other resources which are required to create different objects in Openshift.</p>
 </div>
 <div class="paragraph">
-<p><strong>MacOS</strong></p>
+<p>Please review the following list to have an overall understanding about the resources provided for completing this tutorial:</p>
 </div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube start --memory=8192 --cpus=3 --kubernetes-version=v1.23.1 --vm-driver=virtualbox -p my_profile</code></pre>
+<div class="ulist">
+<ul>
+<li>
+<p>An Openshift cluster that will host and make available a set of applications deployed</p>
+</li>
+<li>
+<p>An ArgoCD installation which will allow attendees to deploy applications in a GitOps fashion</p>
+</li>
+<li>
+<p>A Tekton installation that will control the applications lifecycle automatically</p>
+</li>
+<li>
+<p>A set of GitHub repositories that include the templates and automatisms required to deploy a group of applications</p>
+</li>
+<li>
+<p><a href="https://github.com/davidseve/cloud-native-deployment-strategies">GitHub - Cloud Native Deployment Strategies Repository</a></p>
+</li>
+</ul>
 </div>
+<div class="sect2">
+<h3 id="01-parameters"><a class="anchor" href="#01-parameters"></a>Parameters</h3>
+<div class="paragraph">
+<p>The instructor provides the users the necessary Openshift credentials and other important parameters at the beginning of this tutorial in order to access and complete the laboratory.</p>
 </div>
 <div class="paragraph">
-<p><strong>Linux</strong></p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube start --memory=8192 --cpus=3 --kubernetes-version=v1.23.1 --vm-driver=kvm2 -p my_profile</code></pre>
-</div>
+<p>The following table includes the parameters that the instructor should provide you at the beginning of the laboratory:</p>
 </div>
 <div class="paragraph">
-<p><strong>Windows:</strong></p>
+<p>TODO</p>
 </div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">minikube start --memory=8192 --cpus=3 --kubernetes-version=v1.23.1 --vm-driver=hyperv -p my_profile</code></pre>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-center valign-top"><strong>Name</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Reference</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Example</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Openshift Cluster API (Access CLI)</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;ocp_cluster_api&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://api.cicdgitopsworkshop.sandbox507.opentlc.com:6443" class="bare">https://api.cicdgitopsworkshop.sandbox507.opentlc.com:6443</a></em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Openshift Cluster Console</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;ocp_cluster_console&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com" class="bare">https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com</a></em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Username</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;username&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">user1</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Password</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;pass&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">P4ssw0rd</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">App Namespace</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;user_namespace&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">user1-jump-app</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">CI/CD Namespace</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;user_namespace_cicd&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">user1-jump-app-cicd</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Openshift Apps Domain</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;openshift_apps_domain&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em>apps.cicdgitopsworkshop.sandbox507.opentlc.com</em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ArgoCD console</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;argocd_console_url&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://argocd-gitops-argocd.cicdgitopsworkshop.sandbox507.opentlc.com" class="bare">https://argocd-gitops-argocd.cicdgitopsworkshop.sandbox507.opentlc.com</a></em></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ArgoCD Project</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;argocd_project&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">jump-app</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-center valign-top"><p class="tableblock">ArgoCD Openshift Cluster</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;argocd_ocp_cluster_api&gt;</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://kubernetes.default.svc" class="bare">https://kubernetes.default.svc</a></em></p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect2">
+<h3 id="01-accessoc"><a class="anchor" href="#01-accessoc"></a>Access - OC Client</h3>
+<div class="paragraph">
+<p>The OpenShift Container Platform CLI (which needs to be installed first) exposes the commands for managing your applications as well as the lower-level tools to interact with each component of your system.</p>
 </div>
 <div class="paragraph">
-<p>And the output must be something similar like:</p>
+<p>Please review the previous settings with your instructor and connect to the cluster executing next command from your terminal:</p>
 </div>
-<div class="listingblock console-output">
+<div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">😄  [my_profile] minikube v1.20.0 on Darwin 11.3
-✅  Created a new profile : my_profile
-✅  minikube profile was successfully set to my_profile
-😄  [default] minikube v1.25.1 on Darwin 11.3
-✨  Selecting 'virtualbox' driver from user configuration (alternates: [hyperkit])
-🔥  Creating virtualbox VM (CPUs=2, Memory=8192MB, Disk=50000MB) ...
-🐳  Preparing Kubernetes v1.23.1 on Docker '20.10.6' ...
-    ▪ apiserver.enable-admission-plugins=LimitRanger,NamespaceExists,NamespaceLifecycle,ResourceQuota,ServiceAccount,DefaultStorageClass,MutatingAdmissionWebhook
-🚜  Pulling images ...
-🚀  Launching Kubernetes ...
-⌛  Waiting for cluster to come online ...
-🏄  Done! kubectl is now configured to use "my_profile"</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u &lt;user&gt; -p &lt;pass&gt; &lt;ocp_cluster_api&gt;</code></pre>
 </div>
 </div>
+<div class="imageblock unresolved">
+<div class="content">
+<img src="oc_login_output.png" alt="oc login output">
+</div>
+<div class="title">Figure 1. OC CLI Login Output</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Please pay special attention to <em>oc CLI</em>  because you will need to use this tool several times during this tutorial.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="01-accessconsole"><a class="anchor" href="#01-accessconsole"></a>Access - OCP Console</h3>
 <div class="paragraph">
-<p>Finally configure to use minikube internal docker as docker host:</p>
+<p>In addition, access Openshift Console using your credentials via browser in order to check connectivity and accessibility to the console:</p>
 </div>
-<div class="listingblock console-input">
+<div class="ulist">
+<ul>
+<li>
+<p>&lt;ocp_cluster_console&gt; (<em>E.g. <a href="https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com" class="bare">https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com</a></em>)</p>
+</li>
+</ul>
+</div>
+<div class="imageblock unresolved">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">eval $(minikube docker-env -p my_profile)</code></pre>
+<img src="ocp_console.png" alt="ocp console">
 </div>
-</div>
-</div>
-<div class="tab-pane" aria-labelledby="tabset1_openshift">
-<div class="paragraph">
-<p>To run OpenShift4, you need to have one provisioned using <a href="https://try.openshift.com">try.openshift.com</a> or can use any existing OpenShift4 cluster.
-Once you have your cluster, you can download the latest OpenShift client(oc) from <a href="https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/">here</a> and add to your path.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre>oc version</pre>
-</div>
-</div>
-<div class="paragraph">
-<p>You can check the OpenShift version using:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc version</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>The output should show oc version &gt;=4.7:</p>
-</div>
-<div class="listingblock console-output">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">Client Version: 4.7.0-202102130115.p0-c66c03f
-Kubernetes Version: v1.23.1</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Then login into the OpenShift cluster using <code>oc login</code></p>
-</div>
-</div>
-</div>
-</div>
-<div class="paragraph">
-<p>And then you are ready for start using Kubernetes:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/kubelogo.png" alt="kubelogo">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="downloadtutorial"><a class="anchor" href="#downloadtutorial"></a>Get tutorial sources</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Before we start setting up the environment, let’s clone the tutorial sources and set the <code>TUTORIAL_HOME</code> environment variable to point to the root directory of the tutorial:</p>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">git clone <a href="https://github.com/redhat-developer-demos/rhd-tutorial-common.git" class="bare">https://github.com/redhat-developer-demos/rhd-tutorial-common.git</a> my_folder</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">export TUTORIAL_HOME="$(pwd)/my_folder"</code></pre>
-</div>
-</div>
-<div class="listingblock console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">cd $TUTORIAL_HOME</code></pre>
+<div class="title">Figure 2. Openshift Console</div>
 </div>
 </div>
 </div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="index.html">Template Tutorial</a></span>
-  <span class="next"><a href="02-deploy.html">2. Deploy Service</a></span>
+  <span class="next"><a href="03-blue-green.html">3. Cloud Native Blue/Green Deployment Strategy</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

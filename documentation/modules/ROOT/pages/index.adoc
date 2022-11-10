@@ -1,4 +1,5 @@
 TODO
+
 = Welcome to Red Hat Workshop - GitOps & Blue/Green & Promotion between environments
 :page-layout: home
 :!sectids:

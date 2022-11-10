@@ -1,5 +1,6 @@
 TODO
-= Cloud Native Blue/Green Deployment Strategy
+
+= Promote new version to Production environment
 
 include::_attributes.adoc[]
 

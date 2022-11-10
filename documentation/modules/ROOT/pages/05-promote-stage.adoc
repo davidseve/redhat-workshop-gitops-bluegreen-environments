@@ -1,5 +1,6 @@
 TODO
-= Cloud Native Blue/Green Deployment Strategy
+
+= Promote new version to Stage environment
 
 include::_attributes.adoc[]
 

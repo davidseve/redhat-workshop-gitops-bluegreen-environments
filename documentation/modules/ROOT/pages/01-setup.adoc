@@ -1,4 +1,5 @@
 TODO
+
 = Environment Setup
 
 include::_attributes.adoc[]
@@ -44,6 +45,7 @@ The instructor provides the users the necessary Openshift credentials and other 
 The following table includes the parameters that the instructor should provide you at the beginning of the laboratory:
 
 TODO
+
 [cols="3*^,3*.",options="header,+attributes"]
 |===
 |**Name**|**Reference**|**Example**

@@ -6,6 +6,7 @@
 *** xref:01-setup.adoc#01-accessconsole[1.2.3 Access - OCP Console]
 
 TODO
+
 * xref:02-configuration.adoc[2. Environments installation and configuration]
 
 

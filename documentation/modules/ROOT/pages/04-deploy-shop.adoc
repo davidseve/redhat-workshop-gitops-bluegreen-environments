@@ -1,5 +1,6 @@
 TODO
-= Cloud Native Blue/Green Deployment Strategy
+
+= Deploy Shop Application
 
 include::_attributes.adoc[]
 

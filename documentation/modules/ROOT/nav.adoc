@@ -1,7 +1,19 @@
-* xref:01-setup.adoc[1. Setup]
-** xref:01-setup.adoc#prerequisite[Prerequisites]
-** xref:01-setup.adoc#minikube[Setup Minikube]
+* xref:01-setup.adoc[1. Environment Setup]
+** xref:01-setup.adoc#01-prerequisites[1.1 Prerequisites]
+** xref:01-setup.adoc#01-laboratory[1.2 Laboratory]
+*** xref:01-setup.adoc#01-parameters[1.2.1 Parameters]
+*** xref:01-setup.adoc#01-accessoc[1.2.2 Access - OC Client]
+*** xref:01-setup.adoc#01-accessconsole[1.2.3 Access - OCP Console]
 
-* xref:02-deploy.adoc[2. Deploy Service]
-** xref:02-deploy.adoc#package[Build Service]
-** xref:02-deploy.adoc#deploy[Deploy Dervice]
+TODO
+* xref:02-configuration.adoc[2. Environments installation and configuration]
+
+
+* xref:03-blue-green.adoc[3. Cloud Native Blue/Green Deployment Strategy]
+
+
+* xref:04-deploy-shop.adoc[4. Deploy Shop Application
+
+* xref:05-promote-stage.adoc[5. Promote new version to Stage environment]
+
+* xref:06-promote-production.adoc[6. Promote new version to Production environment]

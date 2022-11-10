@@ -1,0 +1,5 @@
+TODO
+= Cloud Native Blue/Green Deployment Strategy
+
+include::_attributes.adoc[]
+

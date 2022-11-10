@@ -9,7 +9,7 @@ The general idea behind this workshop is to get an initial understanding of the 
 - Deploy microservice-based applications in Kubernetes using ArgoCD and Helm
 - Operate applications in Kubernetes using ArgoCD in a GitOps model
 - Blue/Green deployment for Cloud Native applications
-- Promotion between environments in a GitOps model.
+- Promotion between environments in a GitOps model. 
 
 ## Courseware official documentation
 

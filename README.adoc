@@ -1,1 +1,16 @@
-Check the build courseware https://redhat-scholars.github.io/build-course[documentation]  on how folder structure, how to use macros and other gotchas
+# Red Hat Workshop - GitOps & Blue/Green & Promotion between environments
+
+## Introduction
+
+_Red Hat Workshop GitOps & Blue/Green & Promotion between environments_ is a repository which includes a tutorial with a set of practices for the purpose of practicing with Kubernetes Native GitOps model, Blue/Green deployment and promotion between environments.
+
+The general idea behind this workshop is to get an initial understanding of the following points:
+
+- Deploy microservice-based applications in Kubernetes using ArgoCD and Helm
+- Operate applications in Kubernetes using ArgoCD in a GitOps model
+- Blue/Green deployment for Cloud Native applications
+- Promotion between environments in a GitOps model.
+
+## Courseware official documentation
+
+This tutorial has been developed using courseware. Please visit courseware https://redhat-scholars.github.io/build-course[documentation] for more information about this framework.

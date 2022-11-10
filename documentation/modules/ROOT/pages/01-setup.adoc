@@ -1,5 +1,3 @@
-TODO
-
 = Environment Setup
 
 include::_attributes.adoc[]

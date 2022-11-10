@@ -2,9 +2,9 @@ runtime:
   cache_dir: ./.cache/antora
 
 site:
-  title: Template Tutorial
-  url: https://redhat-scholars.github.io/course-template
-  start_page: template-tutorial::index.adoc
+  title: Red Hat Workshop - GitOps & Blue/Green & Promotion betwee
+  url: http://localhost:3000/rhs-build-course/index.html
+  start_page: redhat-workshop-gitops-bluegreen-environments::index.adoc
 
 content:
   sources:

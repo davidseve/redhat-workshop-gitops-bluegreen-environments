@@ -1,0 +1,34 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: user1-shop
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+      - environment: stage
+        user: user1
+      - environment: prod
+        user: user1
+  template:
+    metadata:
+      name:  '{{user}}-{{environment}}-shop'
+      namespace: openshift-gitops
+    spec:
+      destination:
+        name: ''
+        namespace: '{{user}}-{{environment}}'
+        server: 'https://kubernetes.default.svc'
+      source:
+        path: helm/quarkus-helm-umbrella/chart
+        repoURL:  https://github.com/davidseve/cloud-native-deployment-strategies.git
+        targetRevision: environments # TODO cange to user une branch
+        helm:
+          valueFiles:
+            - values/envs/values-{{environment}}.yaml
+      project: '{{user}}'
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: true

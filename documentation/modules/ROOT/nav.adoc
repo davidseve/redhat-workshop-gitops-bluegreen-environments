@@ -13,7 +13,7 @@ TODO
 * xref:03-blue-green.adoc[3. Cloud Native Blue/Green Deployment Strategy]
 
 
-* xref:04-deploy-shop.adoc[4. Deploy Shop Application
+* xref:04-deploy-shop.adoc[4. Deploy Shop Application]
 
 * xref:05-promote-stage.adoc[5. Promote new version to Stage environment]
 

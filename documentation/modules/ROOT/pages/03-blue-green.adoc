@@ -1,6 +1,56 @@
-TODO
-
-= Cloud Native Blue/Green Deployment Strategy
+= Cloud Native Blue Green Deployment Strategy
 
 include::_attributes.adoc[]
 
+[#03-microservices-architecture]
+== Microservices architecture
+
+The traditional approach to building applications has focused on the monolith - having all deployable parts of the app contained within that single app. *Microservice Architectures* help solve these issues and boost development and response. It's one of the main factors of a *Cloud Native development*. Now, we have several applications that have dependencies on each other and also have other dependencies like brokers or databases.
+
+Applications have their own life cycle, so we should be able to execute independent deployments. All the applications and dependencies will not change their version at the same time. Therefore, microservices enable your development team to roll out software solutions more quickly and better react to customer needs.
+
+[#03-bluegreen-deployment-strategy]
+== Blue/Green deployment strategy
+
+*Blue-green deployment* is a strategy for updating running computer systems with *minimal downtime*. The operator maintains two environments, dubbed blue and green. One serves production traffic (the version all users use), while the other is updated.
+
+The old version is the blue environment, while the new version is the green environment. Once all the *production traffic is fully transferred from blue to green*, blue can be kept as-is for a possible rollback or be updated to become the template upon which the next update is made.
+
+* Advantages:
+** Minimize downtime.
+** A quick way to roll back.
+** Smoke testing.
+* Disadvantages:
+** Doubling of total resources.
+** Backward compatibility.
+
+[#03-continous-delivery]
+== Continuous delivery
+
+Another important topic in Cloud Native practices is *Continuous Delivery*. Continuous delivery, often abbreviated as CD, is a set of practices in which *code changes are automatically deployed into an acceptance environment*. CD crucially includes procedures to ensure that software is adequately tested before deployment and provides a way to roll back changes if deemed necessary.
+
+
+We have several applications doing Blue/Green deployment independently, so we have to automate it. We will use *Helm*, *Openshift Pipelines*, *Openshift GitOps*, and, of course, Red Hat *Openshift* to help us. In the following steps, we will see a real example of how to install, deploy and manage the life cycle of Cloud Native applications doing Blue/Green deployment.
+
+
+[#03-how-to-do-bluegreen]
+== How-to Blue/Green
+
+In this example, we have two versions up and running in production: online and offline. We also have routers and services for offline and online pointing to the corresponding microservice. As explained above, we can deploy a new version of the microservice in the green service ("offline") and perform *smoke tests* against it to ensure that the new version will perform correctly when real traffic begins to arrive to Green.
+
+image::blue-green-01-initial.png[]
+
+When a new version is ready for the real users, we only have to modify the k8s service to point to the new deployment (Green) as in the following image. There is minimum downtime and we can do a rapid rollback just by undoing the changes in the service.
+
+image::blue-green-02-switch.png[]
+
+As with great power comes great responsibility, you have to take the following into account:
+
+* We need to *double the total resources used*: CPU, RAM, Persistent Storage, etc. We will see how to minimize this effect.
+* We have to be *ready for a rapid rollback*. In case of seeing any issue in the monitorization, we should be able to modify the service to point back to the first deployment.
+* We need to keep *backward compatibility*. If not, we would not be able to perform rollbacks.
+
+[NOTE]
+====
+In the following sections, you will take advantage of technologies like Helm, Openshift Pipelines, Openshift GitOps, and Openshift to perform and automate a process as the one explained above using the Shop application.
+====

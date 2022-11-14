@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Cloud Native Blue Green Deployment Strategy :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
+    <link rel="canonical" href="http://localhost:3000/rhs-build-course/index.html/redhat-workshop-gitops-bluegreen-environments/03-blue-green.html">
+    <link rel="prev" href="02-configuration.html">
+    <link rel="next" href="04-deploy-shop.html">
+    <meta name="generator" content="Antora 3.0.0">
+    <link rel="stylesheet" href="../_/css/site.css">
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://developers.redhat.com" target="_blank"><img src="../_/img/NewRHDFullLogo_4-color_white-wordmark.png" height="40px" alt="Red Hat Developer Program"></a>
+      <a class="navbar-item" style="font-size: 24px; color: white" href="http://localhost:3000/rhs-build-course/index.html">Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://developers.redhat.com/ebooks/" target="_blank">Books</a>
+        <a class="navbar-item" href="https://developers.redhat.com/cheatsheets/" target="_blank">Cheat Sheets</a>
+        <a class="navbar-item" href="https://developers.redhat.com/events/" target="_blank">Upcoming Events</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+          <a class="navbar-link" href="#">More Tutorials</a>
+          <div class="navbar-dropdown">
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/kubernetes-tutorial/" target="_blank">Kubernetes</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/istio-tutorial/" target="_blank">Istio</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/quarkus-tutorial/" target="_blank">Quarkus</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/knative-tutorial/" target="_blank">Knative</a>
+            <a class="navbar-item" href="https://redhat-developer-demos.github.io/tekton-tutorial/" target="_blank">Tekton</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="redhat-workshop-gitops-bluegreen-environments" data-version="master">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html"></a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-setup.html">1. Environment Setup</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="01-setup.html#01-prerequisites">1.1 Prerequisites</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="01-setup.html#01-laboratory">1.2 Laboratory</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-setup.html#01-parameters">1.2.1 Parameters</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-setup.html#01-accessoc">1.2.2 Access - OC Client</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="01-setup.html#01-accessconsole">1.2.3 Access - OCP Console</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="02-configuration.html">2. Environments installation and configuration</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="03-blue-green.html">3. Cloud Native Blue/Green Deployment Strategy</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-microservices-architecture">3.1 Microservices Architecture</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-bluegreen-deployment-strategy">3.2 Blue/Green strategy</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-continous-delivery">3.3 Continuous delivery</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#03-how-to-do-bluegreen">3.4 How to do Blue/Green</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="04-deploy-shop.html">4. Deploy Shop Application</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="05-promote-stage.html">5. Promote new version to Stage environment</a>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <a class="nav-link" href="06-promote-production.html">6. Promote new version to Production environment</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+    </div>
+  </aside>
+</div>
+<main class="article">
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Workshop</a></li>
+    <li><a href="03-blue-green.html">3. Cloud Native Blue/Green Deployment Strategy</a></li>
+  </ul>
+</nav>
+  <div class="edit-this-page"><a href="https://github.com/davidseve/redhat-workshop-gitops-bluegreen-environments/edit/master/documentation/modules/ROOT/pages/03-blue-green.adoc">Edit this Page</a></div>
+  </div>
+  <div class="content">
+<article class="doc">
+<h1 class="page">Cloud Native Blue Green Deployment Strategy</h1>
+<div class="sect1">
+<h2 id="03-microservices-architecture"><a class="anchor" href="#03-microservices-architecture"></a>Microservices architecture</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The traditional approach to building applications has focused on the monolith - having all deployable parts of the app contained within that single app. <strong>Microservice Architectures</strong> help solve these issues and boost development and response. It&#8217;s one of the main factors of a <strong>Cloud Native development</strong>. Now, we have several applications that have dependencies on each other and also have other dependencies like brokers or databases.</p>
+</div>
+<div class="paragraph">
+<p>Applications have their own life cycle, so we should be able to execute independent deployments. All the applications and dependencies will not change their version at the same time. Therefore, microservices enable your development team to roll out software solutions more quickly and better react to customer needs.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="03-bluegreen-deployment-strategy"><a class="anchor" href="#03-bluegreen-deployment-strategy"></a>Blue/Green deployment strategy</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Blue-green deployment</strong> is a strategy for updating running computer systems with <strong>minimal downtime</strong>. The operator maintains two environments, dubbed blue and green. One serves production traffic (the version all users use), while the other is updated.</p>
+</div>
+<div class="paragraph">
+<p>The old version is the blue environment, while the new version is the green environment. Once all the <strong>production traffic is fully transferred from blue to green</strong>, blue can be kept as-is for a possible rollback or be updated to become the template upon which the next update is made.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Advantages:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Minimize downtime.</p>
+</li>
+<li>
+<p>A quick way to roll back.</p>
+</li>
+<li>
+<p>Smoke testing.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Disadvantages:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Doubling of total resources.</p>
+</li>
+<li>
+<p>Backward compatibility.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="03-continous-delivery"><a class="anchor" href="#03-continous-delivery"></a>Continuous delivery</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Another important topic in Cloud Native practices is <strong>Continuous Delivery</strong>. Continuous delivery, often abbreviated as CD, is a set of practices in which <strong>code changes are automatically deployed into an acceptance environment</strong>. CD crucially includes procedures to ensure that software is adequately tested before deployment and provides a way to roll back changes if deemed necessary.</p>
+</div>
+<div class="paragraph">
+<p>We have several applications doing Blue/Green deployment independently, so we have to automate it. We will use <strong>Helm</strong>, <strong>Openshift Pipelines</strong>, <strong>Openshift GitOps</strong>, and, of course, Red Hat <strong>Openshift</strong> to help us. In the following steps, we will see a real example of how to install, deploy and manage the life cycle of Cloud Native applications doing Blue/Green deployment.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="03-how-to-do-bluegreen"><a class="anchor" href="#03-how-to-do-bluegreen"></a>How-to Blue/Green</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>In this example, we have two versions up and running in production: online and offline. We also have routers and services for offline and online pointing to the corresponding microservice. As explained above, we can deploy a new version of the microservice in the green service ("offline") and perform <strong>smoke tests</strong> against it to ensure that the new version will perform correctly when real traffic begins to arrive to Green.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/blue-green-01-initial.png" alt="blue green 01 initial">
+</div>
+</div>
+<div class="paragraph">
+<p>When a new version is ready for the real users, we only have to modify the k8s service to point to the new deployment (Green) as in the following image. There is minimum downtime and we can do a rapid rollback just by undoing the changes in the service.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/blue-green-02-switch.png" alt="blue green 02 switch">
+</div>
+</div>
+<div class="paragraph">
+<p>As with great power comes great responsibility, you have to take the following into account:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We need to <strong>double the total resources used</strong>: CPU, RAM, Persistent Storage, etc. We will see how to minimize this effect.</p>
+</li>
+<li>
+<p>We have to be <strong>ready for a rapid rollback</strong>. In case of seeing any issue in the monitorization, we should be able to modify the service to point back to the first deployment.</p>
+</li>
+<li>
+<p>We need to keep <strong>backward compatibility</strong>. If not, we would not be able to perform rollbacks.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>In the following sections, you will take advantage of technologies like Helm, Openshift Pipelines, Openshift GitOps, and Openshift to perform and automate a process as the one explained above using the Shop application.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<nav class="pagination">
+  <span class="prev"><a href="02-configuration.html">2. Environments installation and configuration</a></span>
+  <span class="next"><a href="04-deploy-shop.html">4. Deploy Shop Application</a></span>
+</nav>
+</article>
+<aside class="toc sidebar" data-title="Contents" data-levels="2">
+  <div class="toc-menu"></div>
+</aside>
+  </div>
+</main>
+</div>
+<footer class="footer">
+  <a class="rhd-logo" href="https://developers.redhat.com" target="_blank"></div>
+</footer>
+<script src="../_/js/vendor/clipboard.js"></script>
+<script src="../_/js/site.js"></script>
+<script async src="../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

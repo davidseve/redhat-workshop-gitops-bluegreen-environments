@@ -3,7 +3,7 @@ runtime:
 
 site:
   title: "Red Hat Workshop - GitOps & Blue/Green & Promotion between environments"
-  url: http://localhost:3000/rhs-build-course/index.html
+  url: https://davidseve.github.io/redhat-workshop-gitops-bluegreen-environments
   start_page: redhat-workshop-gitops-bluegreen-environments::index.adoc
 
 content:

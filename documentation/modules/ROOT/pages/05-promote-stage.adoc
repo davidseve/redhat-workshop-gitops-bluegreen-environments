@@ -4,8 +4,11 @@ TODO
 
 include::_attributes.adoc[]
 
-
-== Manual steps
+[tabs]
+====
+Manual steps::
++
+--
 cd helm/quarkus-helm-umbrella/chart
 Edit file values/products/envs/stage/green/image-tag-values.yaml
 Set
@@ -34,14 +37,14 @@ git add values/products/envs/stage/green
 git commit -m 'products-green  new image tag v1.1.1'
 git push origin new-image-v1.1.1
 ----
-
-
-
-== Automatic
+--
+Automatic pipeline::
++
+--
 TODO set parameter per env
 [source,yaml]
 ----
-include::examples$run-products-stage/1-pipelinerun-products-new-version.yaml[]
+include::example$run-products-stage/1-pipelinerun-products-new-version.yaml[]
 ----
 
 [.lines_7]
@@ -50,6 +53,11 @@ include::examples$run-products-stage/1-pipelinerun-products-new-version.yaml[]
 ----
 oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-delivery
 ----
+--
+====
+
+
+
 
 Accept pull request and delete the branch
 curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"

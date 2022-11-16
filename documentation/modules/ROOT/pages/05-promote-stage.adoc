@@ -7,7 +7,6 @@ We have split a `Cloud Native` Blue/Green deployment into three steps:
 
 1. Deploy new version.
 2. Switch new version to Online.
-   - Rollback
 3. Align and scale down Offline.
  
 
@@ -17,7 +16,7 @@ We have already deployed the products version v1.0.1, and we are ready to use a 
 First we are going to focus on Stage environment, to validate the the new products version v1.1.1 works properly.
 
 This is our current status:
-.Shop initial status
+
 image::blue-green-step-0.png[]
 
 

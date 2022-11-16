@@ -1,6 +1,8 @@
 TODO
 
 = Environments installation and configuration
+include::_attributes.adoc[]
+
 
 
 [source,yaml]
@@ -8,5 +10,4 @@ TODO
 include::examples/cluster-configuration.yaml[]
 ----
 
-include::_attributes.adoc[]
 

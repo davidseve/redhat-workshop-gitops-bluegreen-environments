@@ -3,6 +3,8 @@ TODO
 = Deploy Shop Application
 
 include::_attributes.adoc[]
+a $USER 
+b %USER%
 
 [.lines_7]
 [.console-input]

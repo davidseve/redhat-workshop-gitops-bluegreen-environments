@@ -15,13 +15,13 @@ spec:
     helm:
       parameters:
         - name: "github.token"
-          value: "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"
+          value: "changeme_token"
         - name: "github.user"
-          value: "davidseve"
+          value: "changeme_user"
         - name: "github.mail"
-          value: "dseveria@redhat.com"
+          value: "changeme_mail"
         - name: "github.repository"
-          value: davidseve
+          value: "changeme_repository"
         - name: "users[0]"
           value: user1
         - name: "users[1]"

@@ -4,20 +4,25 @@ TODO
 
 include::_attributes.adoc[]
 
+TODO delete
 {user} 
 
-[.lines_7]
+
 [.console-input]
 [source,sh,subs="+macros,+attributes"]
 ----
 oc login -u {user}  -p openshift {cluster_api}
 ----
 
+== Log into Argo CD dashboard
+ 
+TODO
+
 == Clone repo
 
 We have a GitHub repository for this demo. As part of the demo, you will have to do some changes and commits. So it is important that you fork the repository and clone it in your local.
 
-[.lines_7]
+
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
@@ -29,32 +34,83 @@ git push origin release
 
 == Deploy Shop Stage and Prod
 
+We are going to create the application Shop, that we will use to test Blue/Green deployment. Because we will make changes in the application's GitHub repository, we have to use the repository that you have just forked. Please edit the following file and set your own GitHub repository in the reportURL.
+
 [source,yaml]
 ----
 include::example$argocd/applicationset-shop.yaml[]
 ----
-[.lines_7]
+
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
 oc apply -f applicationset-shop.yaml -n openshift-gitops 
 ----
 
+Looking at the Argo CD dashboard, you would notice that we have a new Shop application for both environment stage and prod.
 
-== Test Shop Stage
-[.lines_7]
+We have deployed the Shop with ArgoCD. We can test that it is up and running.
+
+== Test Shop in stage environment
+
+=== Online 
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
 curl "$(oc get routes products-umbrella-online -n {user}-stage --template='https://{{.spec.host}}')/products"
+----
+
+=== Offline 
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
 curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"
 ----
 
-== Test Shop Prod
-[.lines_7]
+Notice that in each microservice response we have added metadata information to see better the `version`, `color`, and `mode` of each application. This will help us to see the changes while we do the Blue/Green deployment.
+Because right now we have the same version v1.0.1 in both colors we will have almost the same response, only the mode will change.
+```json
+{
+  "products":[
+     {
+        "discountInfo":{
+           "discounts":[
+              {
+                 "name":"BlackFriday",
+                 "price":"1350€",
+                 "discount":"10%"
+              }
+           ],
+           "metadata":{
+              "version":"v1.0.1",
+              "colour":"blue",
+              "mode":"online" <--
+           }
+        },
+        "name":"TV 4K",
+        "price":"1500€"
+     }
+  ],
+  "metadata":{
+     "version":"v1.0.1",
+     "colour":"blue",
+     "mode":"online" <--
+  }
+}
+```
+
+== Test Shop in prod environment
+
+=== Online 
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
 curl "$(oc get routes products-umbrella-online -n {user}-prod --template='https://{{.spec.host}}')/products"
+----
+
+=== Offline 
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
 curl "$(oc get routes products-umbrella-offline -n {user}-prod --template='https://{{.spec.host}}')/products"
 ----

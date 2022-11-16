@@ -2,6 +2,7 @@ TODO
 
 = Promote new version to Stage environment
 
+== Deploy new Products version v1.1.1
 include::_attributes.adoc[]
 
 [tabs]
@@ -9,9 +10,15 @@ include::_attributes.adoc[]
 Manual steps::
 +
 --
+[.console-input]
+[source,sh,subs="+macros,+attributes"]
+----
 cd helm/quarkus-helm-umbrella/chart
+----
+
 Edit file values/products/envs/stage/green/image-tag-values.yaml
-Set
+
+Set this content to deploy new version v1.1.1
 ```yaml
 products-green:
   quarkus-base:
@@ -20,7 +27,8 @@ products-green:
 ```
 
 Edit file values/products/envs/stage/green/non-static-values.yaml
-Set
+
+
 ```yaml
 products-green:
   quarkus-base:
@@ -28,7 +36,7 @@ products-green:
   mode: online
 ```
 
-[.lines_7]
+
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
@@ -41,13 +49,12 @@ git push origin new-image-v1.1.1
 Automatic pipeline::
 +
 --
-TODO set parameter per env
 [source,yaml]
 ----
 include::example$run-products-stage/1-pipelinerun-products-new-version.yaml[]
 ----
 
-[.lines_7]
+
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
@@ -60,7 +67,13 @@ oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-delive
 
 
 Accept pull request and delete the branch
+
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
 curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"
+----
+
 Switch Products version v1.1.1 to Online
 oc create -f run-products/2-pipelinerun-products-switch.yaml -n {user}-continuous-delivery
 Accept pull request and delete the branch

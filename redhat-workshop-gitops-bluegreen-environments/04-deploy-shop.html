@@ -136,11 +136,20 @@
 </div>
 <h1 id="_deploy_shop_application" class="sect0"><a class="anchor" href="#_deploy_shop_application"></a>Deploy Shop Application</h1>
 <div class="paragraph">
-<p>%USER%</p>
+<p>TODO delete
+%USER%</p>
 </div>
-<div class="listingblock lines_7 console-input">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc login -u %USER%  -p openshift %CLUSTER_API%</code></pre>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_log_into_argo_cd_dashboard"><a class="anchor" href="#_log_into_argo_cd_dashboard"></a>Log into Argo CD dashboard</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -149,7 +158,7 @@
 <div class="paragraph">
 <p>We have a GitHub repository for this demo. As part of the demo, you will have to do some changes and commits. So it is important that you fork the repository and clone it in your local.</p>
 </div>
-<div class="listingblock lines_7 console-input">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">git clone <a href="https://github.com/your_user/cloud-native-deployment-strategies" class="bare">https://github.com/your_user/cloud-native-deployment-strategies</a>
 cd cloud-native-deployment-strategies
@@ -162,6 +171,9 @@ git push origin release</code></pre>
 <div class="sect1">
 <h2 id="_deploy_shop_stage_and_prod"><a class="anchor" href="#_deploy_shop_stage_and_prod"></a>Deploy Shop Stage and Prod</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>We are going to create the application Shop, that we will use to test Blue/Green deployment. Because we will make changes in the application&#8217;s GitHub repository, we have to use the repository that you have just forked. Please edit the following file and set your own GitHub repository in the reportURL.</p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
@@ -172,7 +184,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/davidseve/cloud-native-deployment-strategies.git
+      repoURL: https://github.com/change_me/cloud-native-deployment-strategies.git
       revision: release
       directories:
       - path: helm/quarkus-helm-umbrella/chart/values/products/envs/*
@@ -187,7 +199,7 @@ spec:
         server: 'https://kubernetes.default.svc'
       source:
         path: helm/quarkus-helm-umbrella/chart
-        repoURL:  https://github.com/davidseve/cloud-native-deployment-strategies.git
+        repoURL:  https://github.com/change_me/cloud-native-deployment-strategies.git
         targetRevision: release
         helm:
           valueFiles:
@@ -210,31 +222,92 @@ spec:
           selfHeal: true</code></pre>
 </div>
 </div>
-<div class="listingblock lines_7 console-input">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc apply -f applicationset-shop.yaml -n openshift-gitops</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Looking at the Argo CD dashboard, you would notice that we have a new Shop application for both environment stage and prod.</p>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_test_shop_stage"><a class="anchor" href="#_test_shop_stage"></a>Test Shop Stage</h2>
-<div class="sectionbody">
-<div class="listingblock lines_7 console-input">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-online -n %USER%-stage --template='https://{{.spec.host}}')/products"
-curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"</code></pre>
-</div>
+<div class="paragraph">
+<p>We have deployed the Shop with ArgoCD. We can test that it is up and running.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_test_shop_prod"><a class="anchor" href="#_test_shop_prod"></a>Test Shop Prod</h2>
+<h2 id="_test_shop_in_stage_environment"><a class="anchor" href="#_test_shop_in_stage_environment"></a>Test Shop in stage environment</h2>
 <div class="sectionbody">
-<div class="listingblock lines_7 console-input">
+<div class="sect2">
+<h3 id="_online"><a class="anchor" href="#_online"></a>Online</h3>
+<div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-online -n %USER%-prod --template='https://{{.spec.host}}')/products"
-curl "$(oc get routes products-umbrella-offline -n %USER%-prod --template='https://{{.spec.host}}')/products"</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-online -n %USER%-stage --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_offline"><a class="anchor" href="#_offline"></a>Offline</h3>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that in each microservice response we have added metadata information to see better the <code>version</code>, <code>color</code>, and <code>mode</code> of each application. This will help us to see the changes while we do the Blue/Green deployment.
+Because right now we have the same version v1.0.1 in both colors we will have almost the same response, only the mode will change.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "products":[
+     {
+        "discountInfo":{
+           "discounts":[
+              {
+                 "name":"BlackFriday",
+                 "price":"1350€",
+                 "discount":"10%"
+              }
+           ],
+           "metadata":{
+              "version":"v1.0.1",
+              "colour":"blue",
+              "mode":"online" &lt;--
+           }
+        },
+        "name":"TV 4K",
+        "price":"1500€"
+     }
+  ],
+  "metadata":{
+     "version":"v1.0.1",
+     "colour":"blue",
+     "mode":"online" &lt;--
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_shop_in_prod_environment"><a class="anchor" href="#_test_shop_in_prod_environment"></a>Test Shop in prod environment</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_online_2"><a class="anchor" href="#_online_2"></a>Online</h3>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-online -n %USER%-prod --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_offline_2"><a class="anchor" href="#_offline_2"></a>Offline</h3>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-offline -n %USER%-prod --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
 </div>
 </div>
 </div>

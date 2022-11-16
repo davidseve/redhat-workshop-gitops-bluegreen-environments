@@ -135,6 +135,9 @@
 <p>TODO</p>
 </div>
 <h1 id="_promote_new_version_to_stage_environment" class="sect0"><a class="anchor" href="#_promote_new_version_to_stage_environment"></a>Promote new version to Stage environment</h1>
+<div class="sect1">
+<h2 id="_deploy_new_products_version_v1_1_1"><a class="anchor" href="#_deploy_new_products_version_v1_1_1"></a>Deploy new Products version v1.1.1</h2>
+<div class="sectionbody">
 <div class="tabset is-loading">
 <div class="ulist tabs">
 <ul>
@@ -148,10 +151,16 @@
 </div>
 <div class="content">
 <div class="tab-pane" aria-labelledby="tabset1_manual-steps">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">cd helm/quarkus-helm-umbrella/chart</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>cd helm/quarkus-helm-umbrella/chart
-Edit file values/products/envs/stage/green/image-tag-values.yaml
-Set</p>
+<p>Edit file values/products/envs/stage/green/image-tag-values.yaml</p>
+</div>
+<div class="paragraph">
+<p>Set this content to deploy new version v1.1.1</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -162,8 +171,7 @@ Set</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Edit file values/products/envs/stage/green/non-static-values.yaml
-Set</p>
+<p>Edit file values/products/envs/stage/green/non-static-values.yaml</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -173,7 +181,7 @@ Set</p>
   mode: online</code></pre>
 </div>
 </div>
-<div class="listingblock lines_7 console-input">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">git checkout -b new-image-v1.1.1
 git add values/products/envs/stage/green
@@ -183,9 +191,6 @@ git push origin new-image-v1.1.1</code></pre>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset1_automatic-pipeline">
-<div class="paragraph">
-<p>TODO set parameter per env</p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
@@ -212,7 +217,7 @@ spec:
       claimName: workspace-pvc-shop-cd-new-version</code></pre>
 </div>
 </div>
-<div class="listingblock lines_7 console-input">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-delivery</code></pre>
 </div>
@@ -221,9 +226,15 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>Accept pull request and delete the branch
-curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"
-Switch Products version v1.1.1 to Online
+<p>Accept pull request and delete the branch</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Switch Products version v1.1.1 to Online
 oc create -f run-products/2-pipelinerun-products-switch.yaml -n {user}-continuous-delivery
 Accept pull request and delete the branch
 curl "$(oc get routes products-umbrella-online  -n {user}-stage  --template='https://{{.spec.host}}')/products"
@@ -239,6 +250,8 @@ Align and scale down Offline
 oc create -f run-products/3-pipelinerun-products-aling-offline.yaml  -n {user}-continuous-delivery
 Accept pull request and delete the branch
 curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"</p>
+</div>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="04-deploy-shop.html">4. Deploy Shop Application</a></span>

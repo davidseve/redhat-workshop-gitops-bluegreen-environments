@@ -2,4 +2,4 @@
 :source-highlighter: highlightjs
 
 :cluster_api: %CLUSTER_API%
-:user: %USERNAME%
+:user: %USER%

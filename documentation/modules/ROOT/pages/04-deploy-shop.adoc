@@ -31,7 +31,7 @@ git push origin release
 
 [source,yaml]
 ----
-include::examples$argocd/applicationset-shop.yaml[]
+include::example$argocd/applicationset-shop.yaml[]
 ----
 [.lines_7]
 [.console-input]

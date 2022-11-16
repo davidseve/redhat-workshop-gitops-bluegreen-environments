@@ -4,6 +4,8 @@ TODO
 
 include::_attributes.adoc[]
 
+{user} 
+
 [.lines_7]
 [.console-input]
 [source,sh,subs="+macros,+attributes"]
@@ -29,7 +31,7 @@ git push origin release
 
 [source,yaml]
 ----
-include::examples/applicationset-shop.yaml[]
+include::examples$argocd/applicationset-shop.yaml[]
 ----
 [.lines_7]
 [.console-input]

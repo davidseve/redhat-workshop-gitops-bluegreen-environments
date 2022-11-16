@@ -1,19 +1,19 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: shop-products-switch-
+  generateName: shop-products-align-offline-
 spec:
   pipelineRef:
-    name: pipeline-blue-green-environments   
+    name: pipeline-blue-green-environments      
   params:
   - name: APP
     value: products
-  - name: STEP
-    value: "switch"
   - name: NEW_IMAGE_TAG
     value: "v1.1.1"
+  - name: STEP
+    value: "align-offline"
   - name: NAMESPACE
-    value: "%USER%-stage" #TODO different per user and env
+    value: "%USER%-stage"
   workspaces:
   - name: app-source
     persistentVolumeClaim:

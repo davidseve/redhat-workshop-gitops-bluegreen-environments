@@ -8,7 +8,7 @@ include::_attributes.adoc[]
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc login -u %USER% -p openshift https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443 
+oc login -u $USER -p openshift https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443 
 ----
 
 == Clone repo

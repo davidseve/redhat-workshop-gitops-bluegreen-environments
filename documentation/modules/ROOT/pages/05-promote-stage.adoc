@@ -41,7 +41,7 @@ git push origin new-image-v1.1.1
 TODO set parameter per env
 [source,yaml]
 ----
-include::examples/run-products-stages/1-pipelinerun-products-new-version.yaml[]
+include::examples$run-products-stage/1-pipelinerun-products-new-version.yaml[]
 ----
 
 [.lines_7]

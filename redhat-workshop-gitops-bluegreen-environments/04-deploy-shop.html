@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
+    <title>Deploy Shop Application :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
     <link rel="canonical" href="https://davidseve.github.io/redhat-workshop-gitops-bluegreen-environments/redhat-workshop-gitops-bluegreen-environments/04-deploy-shop.html">
     <link rel="prev" href="03-blue-green.html">
     <link rel="next" href="05-promote-stage.html">
@@ -66,10 +66,7 @@
     <a class="nav-link" href="01-setup.html#01-parameters">1.2.1 Parameters</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="01-setup.html#01-accessoc">1.2.2 Access - OC Client</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="01-setup.html#01-accessconsole">1.2.3 Access - OCP Console</a>
+    <a class="nav-link" href="01-setup.html#01-accessconsole">1.2.2 Access - OCP Console</a>
   </li>
 </ul>
   </li>
@@ -131,17 +128,48 @@
   </div>
   <div class="content">
 <article class="doc">
-<div class="paragraph">
-<p>TODO</p>
-</div>
-<h1 id="_deploy_shop_application" class="sect0"><a class="anchor" href="#_deploy_shop_application"></a>Deploy Shop Application</h1>
+<h1 class="page">Deploy Shop Application</h1>
+<div id="preamble">
+<div class="sectionbody">
 <div class="paragraph">
 <p>TODO delete
 %USER%</p>
 </div>
-<div class="listingblock console-input">
+</div>
+</div>
+<div class="sect2">
+<h3 id="04-accessoc"><a class="anchor" href="#04-accessoc"></a>Access - OC Client</h3>
+<div class="paragraph">
+<p>The OpenShift Container Platform CLI (which needs to be installed first) exposes the commands for managing your applications as well as the lower-level tools to interact with each component of your system.</p>
+</div>
+<div class="paragraph">
+<p>Please review the previous settings with your instructor and connect to the cluster executing next command from your terminal:</p>
+</div>
+<div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">oc login -u %USER%  -p openshift %CLUSTER_API%</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u %USER%  -p openshift %CLUSTER_API%</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>TODO change image
+.OC CLI Login Output
+image::oc_login_output.png[]</p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Please pay special attention to <em>oc CLI</em>  because you will need to use this tool several times during this tutorial.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>TODO
+explain the namespaces</p>
 </div>
 </div>
 <div class="sect1">
@@ -169,10 +197,13 @@ git push origin release</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_deploy_shop_stage_and_prod"><a class="anchor" href="#_deploy_shop_stage_and_prod"></a>Deploy Shop Stage and Prod</h2>
+<h2 id="_deploy_shop_in_stage_and_prod_environments"><a class="anchor" href="#_deploy_shop_in_stage_and_prod_environments"></a>Deploy Shop in Stage and Prod environments</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>We are going to create the application Shop, that we will use to test Blue/Green deployment. Because we will make changes in the application&#8217;s GitHub repository, we have to use the repository that you have just forked. Please edit the following file and set your own GitHub repository in the reportURL.</p>
+</div>
+<div class="paragraph">
+<p>TODO explane applicationset</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -184,7 +215,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/change_me/cloud-native-deployment-strategies.git
+      repoURL: https://github.com/your_user/cloud-native-deployment-strategies.git
       revision: release
       directories:
       - path: helm/quarkus-helm-umbrella/chart/values/products/envs/*
@@ -199,7 +230,7 @@ spec:
         server: 'https://kubernetes.default.svc'
       source:
         path: helm/quarkus-helm-umbrella/chart
-        repoURL:  https://github.com/change_me/cloud-native-deployment-strategies.git
+        repoURL:  https://github.com/your_user/cloud-native-deployment-strategies.git
         targetRevision: release
         helm:
           valueFiles:
@@ -222,16 +253,22 @@ spec:
           selfHeal: true</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Create this ApplicatinSet in OpenShift:</p>
+</div>
 <div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc apply -f applicationset-shop.yaml -n openshift-gitops</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Looking at the Argo CD dashboard, you would notice that we have a new Shop application for both environment stage and prod.</p>
+<p>Looking at the Argo CD dashboard, you would notice that we have a new Shop application for each environment stage and prod. We can test that it is up and running.</p>
 </div>
-<div class="paragraph">
-<p>We have deployed the Shop with ArgoCD. We can test that it is up and running.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ArgoCD-Applications.png" alt="ArgoCD Applications">
+</div>
+<div class="title">Figure 1. Argo CD - Shop applications</div>
 </div>
 </div>
 </div>
@@ -308,6 +345,9 @@ Because right now we have the same version v1.0.1 in both colors we will have al
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-offline -n %USER%-prod --template='https://{{.spec.host}}')/products"</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>We will have the same response in Prod environment.</p>
 </div>
 </div>
 </div>

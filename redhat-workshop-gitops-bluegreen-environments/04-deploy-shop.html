@@ -135,7 +135,64 @@
 <p>TODO</p>
 </div>
 <h1 id="_deploy_shop_application" class="sect0"><a class="anchor" href="#_deploy_shop_application"></a>Deploy Shop Application</h1>
-
+<div class="listingblock lines_7 console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc login -u %USER% -p openshift <a href="https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443" class="bare">https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443</a></code></pre>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_clone_repo"><a class="anchor" href="#_clone_repo"></a>Clone repo</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We have a GitHub repository for this demo. As part of the demo, you will have to do some changes and commits. So it is important that you fork the repository and clone it in your local.</p>
+</div>
+<div class="listingblock lines_7 console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">git clone <a href="https://github.com/your_user/cloud-native-deployment-strategies" class="bare">https://github.com/your_user/cloud-native-deployment-strategies</a>
+cd cloud-native-deployment-strategies
+git checkout -b release
+git push origin release</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_deploy_shop_stage_and_prod"><a class="anchor" href="#_deploy_shop_stage_and_prod"></a>Deploy Shop Stage and Prod</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">Unresolved include directive in modules/ROOT/pages/04-deploy-shop.adoc - include::examples/applicationset-shop.yaml[]</code></pre>
+</div>
+</div>
+<div class="listingblock lines_7 console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc apply -f applicationset-shop.yaml -n openshift-gitops</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_shop_stage"><a class="anchor" href="#_test_shop_stage"></a>Test Shop Stage</h2>
+<div class="sectionbody">
+<div class="listingblock lines_7 console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-online -n %USER%-stage --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_test_shop_prod"><a class="anchor" href="#_test_shop_prod"></a>Test Shop Prod</h2>
+<div class="sectionbody">
+<div class="listingblock lines_7 console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">curl "$(oc get routes products-umbrella-online -n %USER%-prod --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n %USER%-prod --template='https://{{.spec.host}}')/products"</code></pre>
+</div>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="03-blue-green.html">3. Cloud Native Blue/Green Deployment Strategy</a></span>
   <span class="next"><a href="05-promote-stage.html">5. Promote new version to Stage environment</a></span>

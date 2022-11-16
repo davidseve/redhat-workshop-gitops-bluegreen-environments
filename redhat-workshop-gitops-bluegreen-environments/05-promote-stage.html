@@ -186,28 +186,28 @@ git push origin new-image-v1.1.1</code></pre>
 </div>
 <div class="listingblock lines_7 console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n %USER%-continuous-delivery</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n %USERNAME%-continuous-delivery</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Accept pull request and delete the branch
-curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n %USERNAME%-stage --template='https://{{.spec.host}}')/products"
 Switch Products version v1.1.1 to Online
-oc create -f run-products/2-pipelinerun-products-switch.yaml -n %USER%-continuous-delivery
+oc create -f run-products/2-pipelinerun-products-switch.yaml -n %USERNAME%-continuous-delivery
 Accept pull request and delete the branch
-curl "$(oc get routes products-umbrella-online  -n %USER%-stage  --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-online  -n %USERNAME%-stage  --template='https://{{.spec.host}}')/products"
 (optional)Rollback Products version to v1.0.1
-oc create -f run-products/2-pipelinerun-products-switch-rollback.yaml -n %USER%-continuous-delivery
+oc create -f run-products/2-pipelinerun-products-switch-rollback.yaml -n %USERNAME%-continuous-delivery
 Accept pull request and delete the branch
-curl "$(oc get routes products-umbrella-online  -n %USER%-stage  --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-online  -n %USERNAME%-stage  --template='https://{{.spec.host}}')/products"
 Switch
-oc create -f run-products/2-pipelinerun-products-switch.yaml -n %USER%-continuous-delivery
+oc create -f run-products/2-pipelinerun-products-switch.yaml -n %USERNAME%-continuous-delivery
 Accept pull request and delete the branch
-curl "$(oc get routes  -n %USER%-stage  products-umbrella-online&#8212;&#8203;template='https://{{.spec.host}}')/products"
+curl "$(oc get routes  -n %USERNAME%-stage  products-umbrella-online&#8212;&#8203;template='https://{{.spec.host}}')/products"
 Align and scale down Offline
-oc create -f run-products/3-pipelinerun-products-aling-offline.yaml  -n %USER%-continuous-delivery
+oc create -f run-products/3-pipelinerun-products-aling-offline.yaml  -n %USERNAME%-continuous-delivery
 Accept pull request and delete the branch
-curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"</p>
+curl "$(oc get routes products-umbrella-offline -n %USERNAME%-stage --template='https://{{.spec.host}}')/products"</p>
 </div>
 </div>
 </div>

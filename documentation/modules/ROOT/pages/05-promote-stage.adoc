@@ -4,3 +4,68 @@ TODO
 
 include::_attributes.adoc[]
 
+
+== Manual steps
+cd helm/quarkus-helm-umbrella/chart
+Edit file values/products/envs/stage/green/image-tag-values.yaml
+Set
+```yaml
+products-green:
+  quarkus-base:
+    image:
+      tag: v1.1.1
+```
+
+Edit file values/products/envs/stage/green/non-static-values.yaml
+Set
+```yaml
+products-green:
+  quarkus-base:
+    replicaCount: 2
+  mode: online
+```
+
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+git checkout -b new-image-v1.1.1
+git add values/products/envs/stage/green
+git commit -m 'products-green  new image tag v1.1.1'
+git push origin new-image-v1.1.1
+----
+
+
+
+== Automatic
+TODO set parameter per env
+[source,yaml]
+----
+include::examples/run-products/1-pipelinerun-products-new-version.yaml[]
+----
+
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+oc create -f 1-pipelinerun-products-new-version.yaml -n %USER%-continuous-delivery
+----
+
+Accept pull request and delete the branch
+curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"
+Switch Products version v1.1.1 to Online
+oc create -f run-products/2-pipelinerun-products-switch.yaml -n %USER%-continuous-delivery
+Accept pull request and delete the branch
+curl "$(oc get routes products-umbrella-online  -n %USER%-stage  --template='https://{{.spec.host}}')/products"
+(optional)Rollback Products version to v1.0.1
+oc create -f run-products/2-pipelinerun-products-switch-rollback.yaml -n %USER%-continuous-delivery
+Accept pull request and delete the branch
+curl "$(oc get routes products-umbrella-online  -n %USER%-stage  --template='https://{{.spec.host}}')/products"
+Switch
+oc create -f run-products/2-pipelinerun-products-switch.yaml -n %USER%-continuous-delivery
+Accept pull request and delete the branch
+curl "$(oc get routes  -n %USER%-stage  products-umbrella-online--template='https://{{.spec.host}}')/products"
+Align and scale down Offline
+oc create -f run-products/3-pipelinerun-products-aling-offline.yaml  -n %USER%-continuous-delivery
+Accept pull request and delete the branch
+curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"

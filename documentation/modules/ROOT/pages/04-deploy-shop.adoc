@@ -4,3 +4,55 @@ TODO
 
 include::_attributes.adoc[]
 
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+oc login -u %USER% -p openshift https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443 
+----
+
+== Clone repo
+
+We have a GitHub repository for this demo. As part of the demo, you will have to do some changes and commits. So it is important that you fork the repository and clone it in your local.
+
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+git clone https://github.com/your_user/cloud-native-deployment-strategies
+cd cloud-native-deployment-strategies
+git checkout -b release
+git push origin release
+----
+
+== Deploy Shop Stage and Prod
+
+[source,yaml]
+----
+include::examples/applicationset-shop.yaml[]
+----
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+oc apply -f applicationset-shop.yaml -n openshift-gitops 
+----
+
+
+== Test Shop Stage
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+curl "$(oc get routes products-umbrella-online -n %USER%-stage --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"
+----
+
+== Test Shop Prod
+[.lines_7]
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+curl "$(oc get routes products-umbrella-online -n %USER%-prod --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n %USER%-prod --template='https://{{.spec.host}}')/products"
+----

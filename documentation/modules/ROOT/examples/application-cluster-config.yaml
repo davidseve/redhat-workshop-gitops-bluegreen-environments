@@ -11,15 +11,17 @@ spec:
   source:
     path: gitops/cluster-config
     repoURL: 'https://github.com/davidseve/cloud-native-deployment-strategies.git'
-    targetRevision: environments
+    targetRevision: HEAD
     helm:
       parameters:
-        - name: "pipeline.enabled"
-          value: 'false'
-        - name: "github.enabled"
-          value: 'false'
-        - name: "bluegreen.enabled"
-          value: 'false'  
+        - name: "github.token"
+          value: "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"
+        - name: "github.user"
+          value: "davidseve"
+        - name: "github.mail"
+          value: "dseveria@redhat.com"
+        - name: "github.repository"
+          value: davidseve
         - name: "users[0]"
           value: user1
         - name: "users[1]"

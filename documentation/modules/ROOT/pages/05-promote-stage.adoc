@@ -17,6 +17,7 @@ First we are going to focus on Stage environment, to validate the the new produc
 
 This is our current status:
 
+.Shop initial status
 image::blue-green-step-0.png[]
 
 
@@ -92,7 +93,8 @@ oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-delive
 ----
 --
 ====
-
+TODO explain the pull request
+TODO add image
 Accept pull request and delete the branch.
 
 ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.
@@ -101,6 +103,7 @@ ArgoCD will synchronize the application with the new changes. You can do it manu
 image::ArgoCD-Shop-Refresh.png[]
 
 This will be the Shop status:
+
 .Shop step 1
 image::blue-green-step-1.png[]
 
@@ -171,13 +174,15 @@ oc create -f 2-pipelinerun-products-switch.yaml -n {user}-continuous-delivery
 --
 ====
 
+TODO explain the pull request
+TODO add image
 Accept pull request and delete the branch.
 
 ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.
 
 This will be the Shop status:
+
 .Shop step 2
-TODO
 image::blue-green-step-2.png[]
 
 [.console-input]
@@ -236,13 +241,13 @@ oc create -f 3-pipelinerun-products-aling-offline.yaml -n {user}-continuous-deli
 ====
 
 
-
+TODO explain the pull request
+TODO add image
 Accept pull request and delete the branch.
 
 ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.
 
 .Shop step 3
-TODO
 image::blue-green-step-3.png[]
 
 [.console-input]

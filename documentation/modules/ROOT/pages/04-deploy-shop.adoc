@@ -3,14 +3,12 @@ TODO
 = Deploy Shop Application
 
 include::_attributes.adoc[]
-a $USER 
-b %USER%
 
 [.lines_7]
 [.console-input]
 [source,sh,subs="+macros,+attributes"]
 ----
-oc login -u {username}  -p openshift $OCP_CLUSTER_API
+oc login -u {user}  -p openshift {cluster_api}
 ----
 
 == Clone repo
@@ -46,8 +44,8 @@ oc apply -f applicationset-shop.yaml -n openshift-gitops
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-curl "$(oc get routes products-umbrella-online -n %USER%-stage --template='https://{{.spec.host}}')/products"
-curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-online -n {user}-stage --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"
 ----
 
 == Test Shop Prod
@@ -55,6 +53,6 @@ curl "$(oc get routes products-umbrella-offline -n %USER%-stage --template='http
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-curl "$(oc get routes products-umbrella-online -n %USER%-prod --template='https://{{.spec.host}}')/products"
-curl "$(oc get routes products-umbrella-offline -n %USER%-prod --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-online -n {user}-prod --template='https://{{.spec.host}}')/products"
+curl "$(oc get routes products-umbrella-offline -n {user}-prod --template='https://{{.spec.host}}')/products"
 ----

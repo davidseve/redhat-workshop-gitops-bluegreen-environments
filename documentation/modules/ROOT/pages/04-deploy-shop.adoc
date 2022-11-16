@@ -1,5 +1,3 @@
-TODO
-
 = Deploy Shop Application
 
 include::_attributes.adoc[]
@@ -7,12 +5,28 @@ include::_attributes.adoc[]
 TODO delete
 {user} 
 
+[#04-accessoc]
+=== Access - OC Client
 
+The OpenShift Container Platform CLI (which needs to be installed first) exposes the commands for managing your applications as well as the lower-level tools to interact with each component of your system.
+
+Please review the previous settings with your instructor and connect to the cluster executing next command from your terminal:
+
+[.lines_space]
 [.console-input]
-[source,sh,subs="+macros,+attributes"]
+[source,bash, subs="+macros,+attributes"]
 ----
 oc login -u {user}  -p openshift {cluster_api}
 ----
+
+TODO change image
+.OC CLI Login Output
+image::oc_login_output.png[]
+
+TIP: Please pay special attention to _oc CLI_  because you will need to use this tool several times during this tutorial.
+
+TODO
+explain the namespaces
 
 == Log into Argo CD dashboard
  
@@ -32,14 +46,17 @@ git checkout -b release
 git push origin release
 ----
 
-== Deploy Shop Stage and Prod
+== Deploy Shop in Stage and Prod environments
 
 We are going to create the application Shop, that we will use to test Blue/Green deployment. Because we will make changes in the application's GitHub repository, we have to use the repository that you have just forked. Please edit the following file and set your own GitHub repository in the reportURL.
 
+TODO explane applicationset
 [source,yaml]
 ----
 include::example$argocd/applicationset-shop.yaml[]
 ----
+
+Create this ApplicatinSet in OpenShift:
 
 [.console-input]
 [source,input,subs="+macros,+attributes"]
@@ -47,9 +64,10 @@ include::example$argocd/applicationset-shop.yaml[]
 oc apply -f applicationset-shop.yaml -n openshift-gitops 
 ----
 
-Looking at the Argo CD dashboard, you would notice that we have a new Shop application for both environment stage and prod.
+Looking at the Argo CD dashboard, you would notice that we have a new Shop application for each environment stage and prod. We can test that it is up and running.
 
-We have deployed the Shop with ArgoCD. We can test that it is up and running.
+.Argo CD - Shop applications
+image::ArgoCD-Applications.png[]
 
 == Test Shop in stage environment
 
@@ -114,3 +132,5 @@ curl "$(oc get routes products-umbrella-online -n {user}-prod --template='https:
 ----
 curl "$(oc get routes products-umbrella-offline -n {user}-prod --template='https://{{.spec.host}}')/products"
 ----
+
+We will have the same response in Prod environment.

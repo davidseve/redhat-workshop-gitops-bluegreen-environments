@@ -79,25 +79,6 @@ TODO
 | _https://kubernetes.default.svc_
 |===
 
-[#01-accessoc]
-=== Access - OC Client
-
-The OpenShift Container Platform CLI (which needs to be installed first) exposes the commands for managing your applications as well as the lower-level tools to interact with each component of your system.
-
-Please review the previous settings with your instructor and connect to the cluster executing next command from your terminal:
-
-[.lines_space]
-[.console-input]
-[source,bash, subs="+macros,+attributes"]
-----
-oc login -u <user> -p <pass> <ocp_cluster_api>
-----
-
-.OC CLI Login Output
-image::oc_login_output.png[]
-
-TIP: Please pay special attention to _oc CLI_  because you will need to use this tool several times during this tutorial.
-
 [#01-accessconsole]
 === Access - OCP Console
 

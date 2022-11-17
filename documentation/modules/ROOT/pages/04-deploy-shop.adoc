@@ -45,11 +45,13 @@ cd cloud-native-deployment-strategies
 git checkout -b release
 git push origin release
 ----
-
+TODO add delete branch after merge pr
 == Deploy Shop in Stage and Prod environments
 
 We are going to create the application Shop, that we will use to test Blue/Green deployment. Because we will make changes in the application's GitHub repository, we have to use the repository that you have just forked. Please edit the following file and set your own GitHub repository in the reportURL.
 
+TODO explain Helm chart
+TODO explain Helm chart values
 TODO explane applicationset
 [source,yaml]
 ----

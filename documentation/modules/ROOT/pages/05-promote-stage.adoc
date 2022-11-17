@@ -20,7 +20,7 @@ This is our current status:
 .Shop initial status
 image::blue-green-step-0.png[]
 
-
+TODO add github token
 == Step 1 - Deploy new version
 
 We will start deploying a new version v1.1.1 in the offline color.

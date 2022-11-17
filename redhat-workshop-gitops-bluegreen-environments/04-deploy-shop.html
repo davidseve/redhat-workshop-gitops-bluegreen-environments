@@ -98,7 +98,19 @@
 </ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="04-deploy-shop.html">4. Deploy Shop Application</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#04-access-the-tools">4.1 Access the tools</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#04-deploy-the-shop">4.2 Deploy the shop</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#04-test-deployment">4.3 Test deployment</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="05-promote-stage.html">5. Promote new version to Stage environment</a>
@@ -135,15 +147,40 @@
 <p>TODO delete
 %USER%</p>
 </div>
+<div class="paragraph">
+<p>This section consists of three steps. First, get access to Openshift and ArgoCD and clone the GitOps repository. Second, deploy the application of both environments. Third, test that the deployment went well.</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="04-access-the-tools"><a class="anchor" href="#04-access-the-tools"></a>Access the tools</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This section focuses on getting access to the four tools that we are going to use to control the deployment of the Shop application:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>OCP Client</strong>: The <code>oc</code> command will be used to create Openshift resources as well as to debug the application configuration.</p>
+</li>
+<li>
+<p><strong>OCP Web console</strong>: The Openshift web console will be used to create Openshift resources as well as to debug the application configuration.</p>
+</li>
+<li>
+<p><strong>ArgoCD web console</strong>: This web console helps us to visualize the sync status between Git and Openshift.</p>
+</li>
+<li>
+<p><strong>Clone the GitOps repo</strong>: This repository contains all the deployment configurations of the application and it&#8217;s the only source of truth of the configuration.</p>
+</li>
+</ul>
 </div>
 <div class="sect2">
-<h3 id="04-accessoc"><a class="anchor" href="#04-accessoc"></a>Access - OC Client</h3>
+<h3 id="_1_openshift_oc_client"><a class="anchor" href="#_1_openshift_oc_client"></a>1. Openshift - OC Client</h3>
 <div class="paragraph">
-<p>The OpenShift Container Platform CLI (which needs to be installed first) exposes the commands for managing your applications as well as the lower-level tools to interact with each component of your system.</p>
+<p>The OpenShift Container Platform CLI (which needs to be installed first) exposes the commands for managing your applications as well as the lower-level tools to interact with each component of your system. With the <code>oc</code> command, you can create applications and manage OpenShift Container Platform projects from a terminal.</p>
 </div>
 <div class="paragraph">
-<p>Please review the previous settings with your instructor and connect to the cluster executing next command from your terminal:</p>
+<p>Please check that you have followed the pre-requisites with your instructor and connect to the cluster executing the next command from your terminal:</p>
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
@@ -151,9 +188,13 @@
 </div>
 </div>
 <div class="paragraph">
-<p>TODO change image
-.OC CLI Login Output
-image::oc_login_output.png[]</p>
+<p>If the login is successful, it should show an output similar to the following screenshot:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/oc_login_output.png" alt="OC CLI Login Output">
+</div>
+<div class="title">Figure 1. OC CLI Login Output</div>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -168,23 +209,103 @@ Please pay special attention to <em>oc CLI</em>  because you will need to use th
 </table>
 </div>
 <div class="paragraph">
-<p>TODO
-explain the namespaces</p>
+<p>As shown in the output, the user will have access to the following namespaces:</p>
 </div>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>%USER%-continuous-deployment</strong>: It will contain all the pipelines.</p>
+</li>
+<li>
+<p><strong>%USER%-prod</strong>: Will contain the application in the production environment.</p>
+</li>
+<li>
+<p><strong>%USER%-stage</strong>: Will contain the application in the staging environment.</p>
+</li>
+</ul>
 </div>
-<div class="sect1">
-<h2 id="_log_into_argo_cd_dashboard"><a class="anchor" href="#_log_into_argo_cd_dashboard"></a>Log into Argo CD dashboard</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>Each user will have its own three namespaces.</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_clone_repo"><a class="anchor" href="#_clone_repo"></a>Clone repo</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_2_openshift_web_console"><a class="anchor" href="#_2_openshift_web_console"></a>2. Openshift - Web Console</h3>
 <div class="paragraph">
-<p>We have a GitHub repository for this demo. As part of the demo, you will have to do some changes and commits. So it is important that you fork the repository and clone it in your local.</p>
+<p>Access the <a href="https://console-openshift-console.apps.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com/k8s/cluster/projects" target="_blank" rel="noopener">OCP web console</a> and login with your assigned username and password:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Username: %USER%.</p>
+</li>
+<li>
+<p>Password: <code>openshift</code>.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Once logged in, you will see the same namespaces as using the <code>oc</code> command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp_console_projects.png" alt="OCP web console projects view">
+</div>
+<div class="title">Figure 2. OCP web console projects view</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_3_argocd_dashboard"><a class="anchor" href="#_3_argocd_dashboard"></a>3. ArgoCD dashboard</h3>
+<div class="paragraph">
+<p>The ArgoCD web console will give you access to control how the git repo is synced with Openshift, as well as check the real status of the synchronization. In order to log in to the web console, access the Openshift web console and click on the following icon: You will get the link to the ArgoCD web console:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp_console_argocd_link.png" alt="Openshift link to the ArgoCD web console">
+</div>
+<div class="title">Figure 3. Openshift link to the ArgoCD web console</div>
+</div>
+<div class="paragraph">
+<p>You will be requested to Log in to ArgoCD. Click on <code>LOG IN VIA OPENSHIFT</code> to be prompted for your Openshift credentials.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd_login.png" alt="ArgoCD login screen">
+</div>
+<div class="title">Figure 4. ArgoCD login screen</div>
+</div>
+<div class="paragraph">
+<p>If the login is successful, you will see the home screen where your applications will be created.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd_applications.png" alt="ArgoCD applications">
+</div>
+<div class="title">Figure 5. ArgoCD applications</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_4_clone_the_gitops_repository"><a class="anchor" href="#_4_clone_the_gitops_repository"></a>4. Clone the GitOps repository</h3>
+<div class="paragraph">
+<p>Following the GitOps practices, all the deployment configuration is stored in the git repo. We have created an initial repository that you will change to configure your deployment. As part of the demo, you will have to do some changes and commits. Fork the repository and clone it in your local machine, as you don&#8217;t have write permissions on the initial git repo.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access the <a href="https://github.com/davidseve/cloud-native-deployment-strategies">cloud-native-deployment-strategies</a> repository and fork it on your GitHub account. If prompted, choose to fork the <code>main</code> branch.</p>
+</li>
+<li>
+<p>Now, in your forked repository, go to <code>Settings &gt; General &gt; Pull Requests</code> and configure the repo to <code>Automatically delete head branches</code> after a PR is merged.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/argocd_github_pr_delete_branch.png" alt="ArgoCD login screen">
+</div>
+<div class="title">Figure 6. ArgoCD login screen</div>
+</div>
+</li>
+<li>
+<p>Finally, clone the repository and change to a new branch <code>release</code> using the following commands:</p>
+</li>
+</ol>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -194,17 +315,78 @@ git checkout -b release
 git push origin release</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_the_shop_application"><a class="anchor" href="#_the_shop_application"></a>The Shop application</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>TODO add delete branch after merge pr
-== Deploy Shop in Stage and Prod environments</p>
+<p>The shop application consists of two Quarkus applications dubbed <strong>products</strong> and <strong>discounts</strong>. When a user requests a product using the Products API, it retrieves the discount information from the Discounts microservice and then responds with all the information.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/shop_architecture.png" alt="Shop app architecture">
+</div>
+<div class="title">Figure 7. Shop app architecture</div>
 </div>
 <div class="paragraph">
-<p>We are going to create the application Shop, that we will use to test Blue/Green deployment. Because we will make changes in the application&#8217;s GitHub repository, we have to use the repository that you have just forked. Please edit the following file and set your own GitHub repository in the reportURL.</p>
+<p>One of the best ways to package Cloud Native applications is <strong>Helm</strong>, as it provides a layer of abstraction that can simplify deployment whilst providing a method of repeatability. In the repository that you just forked, you will find a set of Helm charts used to deploy each of the components of the application.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-console hljs" data-lang="console">helm
+├── quarkus-helm-base        # Defines basic config of all microservices.
+├── quarkus-helm-discounts   # Deployment config for the Discounts micro.
+├── quarkus-helm-networking  # Deployment config for the Networking components.
+├── quarkus-helm-products    # Deployment config for the Products micro.
+└── quarkus-helm-umbrella    # Main chart that combines them all.</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>TODO explain Helm chart
-TODO explain Helm chart values
-TODO explane applicationset</p>
+<p>With the previous <a href="https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies"><code>umbrella</code> structure</a>, each chart defines a set of Openshift resources with default values. The <code>umbrella</code> chart will be our tool to combine them all and override the variables we need.</p>
+</div>
+<div class="paragraph">
+<p>TODO explain Helm chart</p>
+</div>
+<div class="paragraph">
+<p>TODO explain Helm chart values</p>
+</div>
+<div class="paragraph">
+<p>We will use this application to test the <strong>Blue/Green deployment</strong> strategy.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="04-deploy-the-shop"><a class="anchor" href="#04-deploy-the-shop"></a>Deploy Shop in Stage and Prod environments</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+From now on, you will always modify the configuration of the repository that you just forked, as you have read-only permissions in the initial repository.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>In this section, we will create an ArgoCD <code>ApplicationSet</code> that will configure the synchronization of the git repository and Openshift. At this point, we need to stop for a bit and explain what is an ArgoCD <code>Application</code> and <code>ApplicationSet</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>An <code>Application</code> is an ArgoCD CRD that represents a deployed application instance in an environment. It basically synchronizes the K8s resources definitions with the actual objects deployed on Openshift.</p>
+</li>
+<li>
+<p>An <code>ApplicationSet</code> allows you to automatically and dynamically generate ArgoCD <code>Application</code>. We will use them to generate several Applications based on the <code>values.yaml</code> files of the git repo.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Please, edit the following file and set your own GitHub repository in the reportURL.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -255,7 +437,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>Create this ApplicatinSet in OpenShift:</p>
+<p>Now, create the <code>ApplicationSet</code> in OpenShift:</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -269,12 +451,12 @@ spec:
 <div class="content">
 <img src="_images/ArgoCD-Applications.png" alt="ArgoCD Applications">
 </div>
-<div class="title">Figure 1. Argo CD - Shop applications</div>
+<div class="title">Figure 8. Argo CD - Shop applications</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_test_shop_in_stage_environment"><a class="anchor" href="#_test_shop_in_stage_environment"></a>Test Shop in stage environment</h2>
+<h2 id="04-test-deployment"><a class="anchor" href="#04-test-deployment"></a>Test Shop in stage environment</h2>
 <div class="sectionbody">
 <div class="sect2">
 <h3 id="_online"><a class="anchor" href="#_online"></a>Online</h3>

@@ -15,6 +15,9 @@ TODO
 ** xref:03-blue-green.adoc#03-how-to-do-bluegreen[3.4 How to do Blue/Green]
 
 * xref:04-deploy-shop.adoc[4. Deploy Shop Application]
+** xref:04-deploy-shop.adoc#04-access-the-tools[4.1 Access the tools]
+** xref:04-deploy-shop.adoc#04-deploy-the-shop[4.2 Deploy the shop]
+** xref:04-deploy-shop.adoc#04-test-deployment[4.3 Test deployment]
 
 * xref:05-promote-stage.adoc[5. Promote new version to Stage environment]
 

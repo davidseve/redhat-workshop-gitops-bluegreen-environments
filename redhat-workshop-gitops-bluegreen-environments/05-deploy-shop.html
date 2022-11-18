@@ -180,10 +180,6 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO delete
-%USER%</p>
-</div>
-<div class="paragraph">
 <p>This section consists of two steps. First, deploy the application of both environments. Third, test that the deployment went well.</p>
 </div>
 </div>
@@ -327,7 +323,7 @@ metadata:
 spec:
   generators:
   - git:
-      repoURL: https://github.com/your_user/cloud-native-deployment-strategies.git
+      repoURL: https://github.com/%REPOSITORY%/cloud-native-deployment-strategies.git
       revision: release
       directories:
       - path: helm/quarkus-helm-umbrella/chart/values/products/envs/*
@@ -342,7 +338,7 @@ spec:
         server: 'https://kubernetes.default.svc'
       source:
         path: helm/quarkus-helm-umbrella/chart
-        repoURL:  https://github.com/your_user/cloud-native-deployment-strategies.git
+        repoURL:  https://github.com/%REPOSITORY%/cloud-native-deployment-strategies.git
         targetRevision: release
         helm:
           valueFiles:

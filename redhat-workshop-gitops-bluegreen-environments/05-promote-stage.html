@@ -220,14 +220,24 @@ However we can automate it in a pipeline. The pipelines will find the offline co
 <div class="tab-pane" aria-labelledby="tabset1_manual-steps">
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">cd helm/quarkus-helm-umbrella/chart</code></pre>
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">We have to get the offline color. We can get it form Openshift or to the file 'values/products/envs/stage/non-static-networking-values.yaml' to get the color that the offline services is using. Then edit the following files in the right environment and color.</code></pre>
 </div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>cd helm/quarkus-helm-umbrella/chart</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set new tag image values in the offline color.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Edit file values/products/envs/stage/green/image-tag-values.yaml</p>
-</div>
-<div class="paragraph">
-<p>Set this content to deploy new version v1.1.1</p>
+<p>Edit the file 'values/products/envs/stage/green/image-tag-values.yaml'
+Set this content to deploy new version v1.1.1</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -237,11 +247,19 @@ However we can automate it in a pipeline. The pipelines will find the offline co
       tag: v1.1.1</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Edit file values/products/envs/stage/green/non-static-values.yaml</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the application configuration values to use the online services.</p>
+</li>
+<li>
+<p>Scale Up the offline color.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Set this content to use online backend and scale up.</p>
+<p>Edit file 'values/products/envs/stage/green/non-static-values.yaml'
+Set this content to use online backend and scale up.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -297,7 +315,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n %USER%-continuous-delivery</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n %USER%-continuous-deployment</code></pre>
 </div>
 </div>
 </div>
@@ -423,7 +441,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml -n %USER%-continuous-delivery</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml -n %USER%-continuous-deployment</code></pre>
 </div>
 </div>
 </div>
@@ -530,7 +548,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-aling-offline.yaml -n %USER%-continuous-delivery</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-aling-offline.yaml -n %USER%-continuous-deployment</code></pre>
 </div>
 </div>
 </div>

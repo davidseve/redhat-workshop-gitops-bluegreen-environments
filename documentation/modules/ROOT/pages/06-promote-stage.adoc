@@ -20,7 +20,8 @@ This is our current status:
 .Shop initial status
 image::blue-green-step-0.png[]
 
-TODO add github token
+TODO add github token in chapter 4
+
 == Step 1 - Deploy new version
 
 We will start deploying a new version v1.1.1 in the offline color.
@@ -41,10 +42,11 @@ However we can automate it in a pipeline. The pipelines will find the offline co
 Manual steps::
 +
 --
+
+We have to get the offline color. We can get it form Openshift or from the file 'values/products/envs/stage/non-static-networking-values.yaml' to get the color that the offline services is using. Then edit the following files in the right environment and color.
+
 [.console-input]
 [source,sh,subs="+macros,+attributes"]
-We have to get the offline color. We can get it form Openshift or to the file 'values/products/envs/stage/non-static-networking-values.yaml' to get the color that the offline services is using. Then edit the following files in the right environment and color.
-
 ----
 cd helm/quarkus-helm-umbrella/chart
 ----

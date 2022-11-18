@@ -11,9 +11,9 @@ We have split a `Cloud Native` Blue/Green deployment into three steps:
  
 
  
-We have already deployed the products version v1.0.1, and we are ready to use a new products version v1.1.1 that has a new `description` attribute.
+We have already deployed the products version `v1.0.1`, and we are ready to use a new products version `v1.1.1` that has a new `description` attribute.
 
-First we are going to focus on Stage environment, to validate the the new products version v1.1.1 works properly.
+First we are going to focus on *Stage environment*, to validate the the new products version `v1.1.1` works properly.
 
 This is our current status:
 
@@ -24,7 +24,7 @@ TODO add github token in chapter 4
 
 == Step 1 - Deploy new version
 
-We will start deploying a new version v1.1.1 in the offline color.
+We will start deploying a new version `v1.1.1` in the offline color. And get it ready to received online users traffic
 
 Those are the main tasks that we have to execute:
 
@@ -33,7 +33,7 @@ Those are the main tasks that we have to execute:
 - Scale Up the offline color.
 - Commit the changes in a new branch and create a pull request.
 
-If we do not automate those tasks, we will have to see which is the offline color and make all the changes on it in the right values files.
+If we do not automate those tasks, we will have to see which is the offline color and make all the changes in the right values files.
 However we can automate it in a pipeline. The pipelines will find the offline color, make the changes and create the pull request.
 
 
@@ -43,7 +43,7 @@ Manual steps::
 +
 --
 
-We have to get the offline color. We can get it form Openshift or from the file 'values/products/envs/stage/non-static-networking-values.yaml' to get the color that the offline services is using. Then edit the following files in the right environment and color.
+We can get the offline color form Openshift service or from the file `values/products/envs/stage/non-static-networking-values.yaml`. Then edit the following files in the right environment and color.
 
 [.console-input]
 [source,sh,subs="+macros,+attributes"]
@@ -52,8 +52,8 @@ cd helm/quarkus-helm-umbrella/chart
 ----
 - Set new tag image values in the offline color.
 
-Edit the file 'values/products/envs/stage/green/image-tag-values.yaml'
-Set this content to deploy new version v1.1.1
+Edit the file `values/products/envs/stage/green/image-tag-values.yaml`.
+Set this content to deploy new version `v1.1.1`
 ```yaml
 products-green:
   quarkus-base:
@@ -63,8 +63,7 @@ products-green:
 - Change the application configuration values to use the online services.
 - Scale Up the offline color.
 
-
-Edit the file 'values/products/envs/stage/green/non-static-values.yaml'
+Edit the file `values/products/envs/stage/green/non-static-values.yaml`.
 Set this content to use online backend and scale up.
 ```yaml
 products-green:
@@ -87,9 +86,11 @@ Automatic pipeline::
 +
 --
 We have created a pipeline that:
+
 - Get the offline color in the designed environment.
 - Change the right files to deploy a new version.
 - Commit the changes in a new branch and create a pull request
+
 [source,yaml]
 ----
 include::example$run-products-stage/1-pipelinerun-products-new-version.yaml[]
@@ -115,17 +116,17 @@ image::gihub-stage-pr1-changed.png[]
 
 Accept pull request and delete the branch.
 
-ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.
+ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster clicking on `SYNC`` button.
 
 .Argo CD - Refresh Shop
 image::ArgoCD-Shop-Refresh.png[]
 
-This will be the Shop status:
+After ArgoCD synchronize, this will be the Shop status:
 
 .Shop step 1
 image::blue-green-step-1.png[]
 
-See that offline applications have version v1.1.1 and the new attribute description, but the online has not changed.
+See that offline color have version `v1.1.1` and the new attribute description, but the online has not changed.
  
 [.console-input]
 [source,input,subs="+macros,+attributes"]
@@ -157,7 +158,7 @@ curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='http
   }
 }
 ```
-Functional testing users can execute `Smoke tests` to validate this new v1.1.1 version.
+Functional testing users can execute `Smoke tests` to validate this new `v1.1.1` version.
 
 
 == Step 2 - Switch new version to Online
@@ -209,7 +210,7 @@ image::blue-green-step-2.png[]
 curl "$(oc get routes products-umbrella-online  -n {user}-stage  --template='https://{{.spec.host}}')/products"
 ----
 
-**We have in the online environment the new version v1.1.1!!!**
+**We have in the online environment the new version `v1.1.1`!!!**
 ```json
 {
   "products":[
@@ -274,7 +275,7 @@ image::blue-green-step-3.png[]
 curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='https://{{.spec.host}}')/products"
 ----
 
-We can see that the offline `Products` is calling offline `Discounts` and has the new version v1.1.1
+We can see that the offline `Products` is calling offline `Discounts` and has the new version `v1.1.1`
 ```json
 {
   "products":[

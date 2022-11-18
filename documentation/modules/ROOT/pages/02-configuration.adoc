@@ -26,7 +26,7 @@ TODO add image ArgoCD ProjectApp
 For each user we have created 3 namespaces. Two for the environments stage and prod, and one for the continuos deployment pipelines:
  - {user}-stage
  - {user}-prod
- - {user}-continuous-delivery
+ - {user}-continuous-deployment
 TODO add image namespaces
 
 

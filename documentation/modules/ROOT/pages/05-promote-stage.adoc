@@ -43,12 +43,14 @@ Manual steps::
 --
 [.console-input]
 [source,sh,subs="+macros,+attributes"]
+We have to get the offline color. We can get it form Openshift or to the file 'values/products/envs/stage/non-static-networking-values.yaml' to get the color that the offline services is using. Then edit the following files in the right environment and color.
+
 ----
 cd helm/quarkus-helm-umbrella/chart
 ----
+- Set new tag image values in the offline color.
 
-Edit file values/products/envs/stage/green/image-tag-values.yaml
-
+Edit the file 'values/products/envs/stage/green/image-tag-values.yaml'
 Set this content to deploy new version v1.1.1
 ```yaml
 products-green:
@@ -56,9 +58,11 @@ products-green:
     image:
       tag: v1.1.1
 ```
+- Change the application configuration values to use the online services.
+- Scale Up the offline color.
 
-Edit file values/products/envs/stage/green/non-static-values.yaml
 
+Edit file 'values/products/envs/stage/green/non-static-values.yaml'
 Set this content to use online backend and scale up.
 ```yaml
 products-green:
@@ -89,7 +93,7 @@ include::example$run-products-stage/1-pipelinerun-products-new-version.yaml[]
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-delivery
+oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-deployment
 ----
 --
 ====
@@ -169,7 +173,7 @@ include::example$run-products-stage/2-pipelinerun-products-switch.yaml[]
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 2-pipelinerun-products-switch.yaml -n {user}-continuous-delivery
+oc create -f 2-pipelinerun-products-switch.yaml -n {user}-continuous-deployment
 ----
 --
 ====
@@ -235,7 +239,7 @@ include::example$run-products-stage/3-pipelinerun-products-aling-offline.yaml[]
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 3-pipelinerun-products-aling-offline.yaml -n {user}-continuous-delivery
+oc create -f 3-pipelinerun-products-aling-offline.yaml -n {user}-continuous-deployment
 ----
 --
 ====

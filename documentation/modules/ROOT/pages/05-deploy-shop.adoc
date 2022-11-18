@@ -29,11 +29,57 @@ helm
 
 With the previous https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies[`umbrella` structure], each chart defines a set of Openshift resources with default values. The `umbrella` chart will be our tool to combine them all and override the variables we need.
 
+The values of the Umbrella Chart are split into several files to allow reusability. The following piece of code shows them all:
 
-TODO explain Helm chart
+[source, console]
+----
+helm/quarkus-helm-umbrella/chart/values
+├── discounts
+│   ├── envs
+│   │   ├── prod
+│   │   │   ├── blue
+│   │   │   │   ├── image-tag-values.yaml
+│   │   │   │   └── non-static-values.yaml
+│   │   │   ├── green
+│   │   │   │   ├── image-tag-values.yaml
+│   │   │   │   └── non-static-values.yaml
+│   │   │   └── non-static-networking-values.yaml
+│   │   └── stage
+│   │       ├── blue
+│   │       │   ├── image-tag-values.yaml
+│   │       │   └── non-static-values.yaml
+│   │       ├── green
+│   │       │   ├── image-tag-values.yaml
+│   │       │   └── non-static-values.yaml
+│   │       └── non-static-networking-values.yaml
+│   └── static-discounts-values.yaml
+├── products
+│   ├── envs
+│   │   ├── prod
+│   │   │   ├── blue
+│   │   │   │   ├── image-tag-values.yaml
+│   │   │   │   └── non-static-values.yaml
+│   │   │   ├── green
+│   │   │   │   ├── image-tag-values.yaml
+│   │   │   │   └── non-static-values.yaml
+│   │   │   └── non-static-networking-values.yaml
+│   │   └── stage
+│   │       ├── blue
+│   │       │   ├── image-tag-values.yaml
+│   │       │   └── non-static-values.yaml
+│   │       ├── green
+│   │       │   ├── image-tag-values.yaml
+│   │       │   └── non-static-values.yaml
+│   │       └── non-static-networking-values.yaml
+│   └── static-products-values.yaml
+----
 
-TODO explain Helm chart values
+As you can see in the previous tree, there are several values files that are combined to generate each application using its Helm chart. For example, to deploy `discounts` in `production` in the `blue` color, ArgoCD will combine the following files:
 
+* *static-discounts-values.yaml*: Proper configuration of the app that will not change independently of the environment: Prometheus endpoint, ports, etc.
+* *non-static-networking-values.yaml*: The color to which each off/online route should point: Blue or Green.
+* *image-tag-values.yaml*: Version of the application.
+* *non-static-values.yaml*: Number of replicas and to which color it should point at.
 
 We will use this application to test the *Blue/Green deployment* strategy.
 
@@ -65,14 +111,14 @@ Now, create the `ApplicationSet` in OpenShift:
 oc apply -f applicationset-shop.yaml -n openshift-gitops 
 ----
 
-Looking at the Argo CD dashboard, you would notice that we have a new Shop application for each environment stage and prod. We can test that it is up and running.
+Looking at the Argo CD dashboard, you will notice that we have a new Shop application for each environment: Stage and prod. Now, we can test that it is up and running.
 
 .Argo CD - Shop applications
 image::ArgoCD-Applications.png[]
 
 
 [#04-test-deployment]
-== Test Shop in stage environment
+== Test Shop in the Stage environment
 
 === Online 
 [.console-input]
@@ -120,7 +166,7 @@ Because right now we have the same version v1.0.1 in both colors we will have al
 }
 ```
 
-== Test Shop in prod environment
+== Test Shop in the Prod environment
 
 === Online 
 [.console-input]

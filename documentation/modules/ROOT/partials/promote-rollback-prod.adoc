@@ -1,0 +1,110 @@
+== Step 2,5 - Rollback
+
+Imagine that something goes wrong, we know that this never happens but just in case. We can do a very `quick rollback` just undoing the change in the `Products` online service. But, are we sure that with all the pressure that we will have at this moment, we will find the right service and change the label to the right color? Let's move this pressure to the pipeline. 
+
+Those are the main tasks that we have to execute:
+
+- Change the online service
+- Commit the changes in a new branch and create a pull request.
+
+
+[tabs]
+====
+Manual steps::
++
+--
+
+[.console-input]
+[source,sh,subs="+macros,+attributes"]
+----
+cd helm/quarkus-helm-umbrella/chart
+----
+- Change the online service
+
+Edit the file `values/products/envs/{environment}/non-static-networking-values.yaml`.
+Set this content to use the blue color in the online service.
+```yaml
+productsNetworkingOnline:
+  version: blue
+productsNetworkingOffline:
+  version: green
+```
+
+Commit the changes in a new branch and create a pull request
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+git checkout -b rollback-online
+git add values/products/envs/{environment}/non-static-networking-values.yaml
+git commit -m 'Rollback Online products for environment {environment}'
+git push origin rollback-online
+----
+
+--
+Automatic pipeline::
++
+--
+We have created a pipeline that:
+
+- Get the offline color in the designed environment.
+- Change the right files for the online service.
+- Commit the changes in a new branch and create a pull request.
+[source,yaml]
+----
+include::example$run-products-{environment}/2-pipelinerun-products-switch-rollback.yaml[]
+----
+
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+oc create -f 2-pipelinerun-products-switch-rollback.yaml -n {user}-continuous-deployment
+----
+--
+====
+
+You should have the following pull request:
+
+.GitHub Rollback Pull Request
+image::github-pr2-5-{environment}.png[]
+
+With those files changed:
+
+.GitHub Rollback Pull Request Files Changed
+image::gihub-{environment}-pr2-5-changed.png[]
+
+Accept pull request and delete the branch.
+
+ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on `SYNC`` button.
+
+After ArgoCD synchronize, this will be the Shop status:
+
+.Shop step 2.5
+image::blue-green-step-2-5.png[]
+
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+curl "$(oc get routes products-umbrella-online -n {user}-{environment} --template='https://{{.spec.host}}')/products"
+----
+
+We have version v1.0.1 online again.
+```json
+{
+  "products":[
+     {
+        "discountInfo":{...},
+        "name":"TV 4K",
+        "price":"1500€",
+     }
+  ],
+  "metadata":{
+     "version":"v1.0.1", <--
+     "colour":"blue",
+     "mode":"online" <--
+  }
+}
+```
+
+After fixing the issue we can execute the Switch step again.
+
+include::promote-switch.adoc[]

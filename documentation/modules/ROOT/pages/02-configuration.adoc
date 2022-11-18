@@ -6,7 +6,7 @@ include::_attributes.adoc[]
 We have used GitOps to install the cluster. This is the ArgoCD applications that we have used:
 [source,yaml]
 ----
-include::examples/cluster-configuration.yaml[]
+include::example$argocd/application-cluster-config.yaml[]
 ----
 
 This application use a Helm chart that install:

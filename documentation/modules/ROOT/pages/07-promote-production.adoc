@@ -1,6 +1,8 @@
-TODO
+= Promote new version to Production environment 
 
-= Promote new version to Production environment
+include::_attributes-prod.adoc[]
 
 include::_attributes.adoc[]
+
+include::partial$promote.adoc[]
 

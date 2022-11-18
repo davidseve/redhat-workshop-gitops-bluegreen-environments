@@ -13,7 +13,7 @@ content:
     #Change to make url parameters work EX: USER
     - url: git@github.com:davidseve/redhat-workshop-gitops-bluegreen-environments.git
       tags: []
-      branches: [main]
+      branches: [master]
       start_path: documentation
 
 asciidoc:

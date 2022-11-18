@@ -117,14 +117,33 @@ image::ArgoCD-Applications.png[]
 [#04-test-deployment]
 == Test Shop in the Stage environment
 
-=== Online 
+The following components should be deployed:
+
+* products-blue.
+* products-green.
+* discounts-blue.
+* discounts-green.
+
+We are going to test that the routes are configured so that the offline route points to the offline deployments and the online to the online deployments.
+
+[NOTE]
+====
+If you have the `jq` tool installed on your computer, you can pipe the result of the `curl` like this to visualize it correctly:
+
+[source,input,subs="+macros,+attributes"]
+----
+curl <...> | jq
+----
+====
+
+.Online route in the stage environment 
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
 curl "$(oc get routes products-umbrella-online -n {user}-stage --template='https://{{.spec.host}}')/products"
 ----
 
-=== Offline 
+.Offline route in the stage environment 
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
@@ -132,8 +151,11 @@ curl "$(oc get routes products-umbrella-offline -n {user}-stage --template='http
 ----
 
 Notice that in each microservice response we have added metadata information to see better the `version`, `color`, and `mode` of each application. This will help us to see the changes while we do the Blue/Green deployment.
-Because right now we have the same version v1.0.1 in both colors we will have almost the same response, only the mode will change.
-```json
+
+As we have the same version v1.0.1 in both colors we will have almost the same response, only the mode will change.
+
+[source,json]
+----
 {
   "products":[
      {
@@ -161,18 +183,18 @@ Because right now we have the same version v1.0.1 in both colors we will have al
      "mode":"online" <--
   }
 }
-```
+----
 
 == Test Shop in the Prod environment
 
-=== Online 
+.Online route in the productive environment
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
 curl "$(oc get routes products-umbrella-online -n {user}-prod --template='https://{{.spec.host}}')/products"
 ----
 
-=== Offline 
+.Offline route in the productive environment
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----

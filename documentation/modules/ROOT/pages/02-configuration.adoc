@@ -3,11 +3,31 @@ TODO
 = Environments installation and configuration
 include::_attributes.adoc[]
 
-
-
+We have used GitOps to install the cluster. This is the ArgoCD applications that we have used:
 [source,yaml]
 ----
 include::examples/cluster-configuration.yaml[]
 ----
 
+This application use a Helm chart that install:
 
+- operator **Openshift Pipelines**.
+- cluster role `tekton-admin-view`.
+- role binding for ArgoCD and Pipelines to the namespaces.
+- `pipelines-blue-green-environment` the pipelines that we will see later for Blue/Green deployment.
+- Tekton cluster role.
+- Tekton tasks for git and Openshift clients.
+TODO add cluster-configuration image
+
+We have also configure ArgoCD to manage different user with different privileges. We have created one ArgoCD AppProject per user:
+TODO add image ArgoCD ProjectApp
+
+
+For each user we have created 3 namespaces. Two for the environments stage and prod, and one for the continuos deployment pipelines:
+ - {user}-stage
+ - {user}-prod
+ - {user}-continuous-delivery
+TODO add image namespaces
+
+
+The objective is isolate the user like if they where teams that are working in the same cluster. And we don not want one team that is able to see the other team`s applications.

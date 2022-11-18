@@ -126,7 +126,7 @@ This will be the Shop status:
 image::blue-green-step-1.png[]
 
 See that offline applications have version v1.1.1 and the new attribute description, but the online has not changed.
-
+ 
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----

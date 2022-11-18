@@ -2,9 +2,6 @@
 
 include::_attributes.adoc[]
 
-TODO delete
-{user} 
-
 This section focuses on getting access to the four tools that we are going to use to control the deployment of the Shop application:
 
 * *OCP Client*: The `oc` command will be used to create Openshift resources as well as to debug the application configuration.
@@ -87,7 +84,7 @@ image::argocd_github_pr_delete_branch.png["ArgoCD login screen"]
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-git clone https://github.com/your_user/cloud-native-deployment-strategies
+git clone https://github.com/%REPOSITORY%/cloud-native-deployment-strategies
 cd cloud-native-deployment-strategies
 git checkout -b release
 git push origin release

@@ -62,7 +62,7 @@ products-green:
 - Scale Up the offline color.
 
 
-Edit file 'values/products/envs/stage/green/non-static-values.yaml'
+Edit the file 'values/products/envs/stage/green/non-static-values.yaml'
 Set this content to use online backend and scale up.
 ```yaml
 products-green:
@@ -84,7 +84,10 @@ git push origin new-image-v1.1.1
 Automatic pipeline::
 +
 --
-You can use the already created pipelinerun. 
+We have created a pipeline that:
+- Get the offline color in the designed environment.
+- Change the right files to deploy a new version.
+- Commit the changes in a new branch and create a pull request
 [source,yaml]
 ----
 include::example$run-products-stage/1-pipelinerun-products-new-version.yaml[]
@@ -97,8 +100,17 @@ oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-deploy
 ----
 --
 ====
-TODO explain the pull request
-TODO add image
+
+You should have the following pull request:
+
+.GitHub New Version Pull Request
+image::github-pr1-stage.png[]
+
+With those files changed:
+
+.GitHub New Version Pull Request Files Changed
+image::gihub-stage-pr1-changed.png[]
+
 Accept pull request and delete the branch.
 
 ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.

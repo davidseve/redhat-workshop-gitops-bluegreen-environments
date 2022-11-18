@@ -2,7 +2,7 @@
 
 include::_attributes.adoc[]
 
-This section consists of two steps. First, deploy the application of both environments. Third, test that the deployment went well.
+This section consists of two steps: Deploy the application of both environments and test that the deployment went well.
 
 
 == The application

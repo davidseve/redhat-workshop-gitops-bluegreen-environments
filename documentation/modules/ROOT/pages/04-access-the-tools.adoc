@@ -20,7 +20,7 @@ Please check that you have followed the pre-requisites with your instructor and 
 [.console-input]
 [source,bash, subs="+macros,+attributes"]
 ----
-oc login -u {user}  -p openshift {cluster_api}
+oc login -u {user} -p openshift {cluster_api}
 ----
 
 If the login is successful, it should show an output similar to the following screenshot:

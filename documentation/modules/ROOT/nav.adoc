@@ -14,11 +14,12 @@ TODO
 ** xref:03-blue-green.adoc#03-continous-delivery[3.3 Continuous delivery]
 ** xref:03-blue-green.adoc#03-how-to-do-bluegreen[3.4 How to do Blue/Green]
 
-* xref:04-deploy-shop.adoc[4. Deploy Shop Application]
-** xref:04-deploy-shop.adoc#04-access-the-tools[4.1 Access the tools]
-** xref:04-deploy-shop.adoc#04-deploy-the-shop[4.2 Deploy the shop]
-** xref:04-deploy-shop.adoc#04-test-deployment[4.3 Test deployment]
+* xref:04-access-the-tools.adoc[4. Access the tools]
 
-* xref:05-promote-stage.adoc[5. Promote new version to Stage environment]
+* xref:05-deploy-shop.adoc[5. The Shop application]
+** xref:05-deploy-shop.adoc#04-deploy-the-shop[5.1 Deploy the shop]
+** xref:05-deploy-shop.adoc#04-test-deployment[5.2 Test deployment]
 
-* xref:06-promote-production.adoc[6. Promote new version to Production environment]
+* xref:06-promote-stage.adoc[6. Promote new version to Stage environment]
+
+* xref:07-promote-production.adoc[7. Promote new version to Production environment]

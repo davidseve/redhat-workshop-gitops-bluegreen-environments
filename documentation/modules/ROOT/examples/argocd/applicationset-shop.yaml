@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {user}-shop
+  name: %USER%-shop
   namespace: openshift-gitops
 spec:
   generators:
@@ -12,12 +12,12 @@ spec:
       - path: helm/quarkus-helm-umbrella/chart/values/products/envs/*
   template:
     metadata:
-      name:  '{{path.basenameNormalized}}-shop-{user}'
+      name:  '{{path.basenameNormalized}}-shop-%USER%'
       namespace: openshift-gitops
     spec:
       destination:
         name: ''
-        namespace: '{user}-{{path.basenameNormalized}}'
+        namespace: '%USER%-{{path.basenameNormalized}}'
         server: 'https://kubernetes.default.svc'
       source:
         path: helm/quarkus-helm-umbrella/chart
@@ -37,7 +37,7 @@ spec:
             - values/discounts/envs/{{path.basename}}/blue/non-static-values.yaml
             - values/discounts/envs/{{path.basename}}/green/image-tag-values.yaml
             - values/discounts/envs/{{path.basename}}/green/non-static-values.yaml
-      project: '{user}'
+      project: '%USER%'
       syncPolicy:
         automated:
           prune: false

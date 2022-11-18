@@ -2,9 +2,6 @@
 
 include::_attributes.adoc[]
 
-TODO delete
-{user} 
-
 This section consists of two steps. First, deploy the application of both environments. Third, test that the deployment went well.
 
 

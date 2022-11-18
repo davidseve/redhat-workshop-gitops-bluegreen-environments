@@ -258,7 +258,7 @@ Set this content to deploy new version v1.1.1</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Edit file 'values/products/envs/stage/green/non-static-values.yaml'
+<p>Edit the file 'values/products/envs/stage/green/non-static-values.yaml'
 Set this content to use online backend and scale up.</p>
 </div>
 <div class="listingblock">
@@ -283,7 +283,10 @@ git push origin new-image-v1.1.1</code></pre>
 </div>
 <div class="tab-pane" aria-labelledby="tabset1_automatic-pipeline">
 <div class="paragraph">
-<p>You can use the already created pipelinerun.</p>
+<p>We have created a pipeline that:
+- Get the offline color in the designed environment.
+- Change the right files to deploy a new version.
+- Commit the changes in a new branch and create a pull request</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -322,9 +325,25 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>TODO explain the pull request
-TODO add image
-Accept pull request and delete the branch.</p>
+<p>You should have the following pull request:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-pr1-stage.png" alt="github pr1 stage">
+</div>
+<div class="title">Figure 2. GitHub New Version Pull Request</div>
+</div>
+<div class="paragraph">
+<p>With those files changed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gihub-stage-pr1-changed.png" alt="gihub stage pr1 changed">
+</div>
+<div class="title">Figure 3. GitHub New Version Pull Request Files Changed</div>
+</div>
+<div class="paragraph">
+<p>Accept pull request and delete the branch.</p>
 </div>
 <div class="paragraph">
 <p>ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.</p>
@@ -333,7 +352,7 @@ Accept pull request and delete the branch.</p>
 <div class="content">
 <img src="_images/ArgoCD-Shop-Refresh.png" alt="ArgoCD Shop Refresh">
 </div>
-<div class="title">Figure 2. Argo CD - Refresh Shop</div>
+<div class="title">Figure 4. Argo CD - Refresh Shop</div>
 </div>
 <div class="paragraph">
 <p>This will be the Shop status:</p>
@@ -342,7 +361,7 @@ Accept pull request and delete the branch.</p>
 <div class="content">
 <img src="_images/blue-green-step-1.png" alt="blue green step 1">
 </div>
-<div class="title">Figure 3. Shop step 1</div>
+<div class="title">Figure 5. Shop step 1</div>
 </div>
 <div class="paragraph">
 <p>See that offline applications have version v1.1.1 and the new attribute description, but the online has not changed.</p>
@@ -462,7 +481,7 @@ Accept pull request and delete the branch.</p>
 <div class="content">
 <img src="_images/blue-green-step-2.png" alt="blue green step 2">
 </div>
-<div class="title">Figure 4. Shop step 2</div>
+<div class="title">Figure 6. Shop step 2</div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -566,7 +585,7 @@ Accept pull request and delete the branch.</p>
 <div class="content">
 <img src="_images/blue-green-step-3.png" alt="blue green step 3">
 </div>
-<div class="title">Figure 5. Shop step 3</div>
+<div class="title">Figure 7. Shop step 3</div>
 </div>
 <div class="listingblock console-input">
 <div class="content">

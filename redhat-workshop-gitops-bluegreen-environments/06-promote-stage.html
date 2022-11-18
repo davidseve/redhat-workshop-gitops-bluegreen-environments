@@ -197,10 +197,10 @@
 </ol>
 </div>
 <div class="paragraph">
-<p>We have already deployed the products version v1.0.1, and we are ready to use a new products version v1.1.1 that has a new <code>description</code> attribute.</p>
+<p>We have already deployed the products version <code>v1.0.1</code>, and we are ready to use a new products version <code>v1.1.1</code> that has a new <code>description</code> attribute.</p>
 </div>
 <div class="paragraph">
-<p>First we are going to focus on Stage environment, to validate the the new products version v1.1.1 works properly.</p>
+<p>First we are going to focus on <strong>Stage environment</strong>, to validate the the new products version <code>v1.1.1</code> works properly.</p>
 </div>
 <div class="paragraph">
 <p>This is our current status:</p>
@@ -220,7 +220,7 @@
 <h2 id="_step_1_deploy_new_version"><a class="anchor" href="#_step_1_deploy_new_version"></a>Step 1 - Deploy new version</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will start deploying a new version v1.1.1 in the offline color.</p>
+<p>We will start deploying a new version <code>v1.1.1</code> in the offline color. And get it ready to received online users traffic</p>
 </div>
 <div class="paragraph">
 <p>Those are the main tasks that we have to execute:</p>
@@ -242,7 +242,7 @@
 </ul>
 </div>
 <div class="paragraph">
-<p>If we do not automate those tasks, we will have to see which is the offline color and make all the changes on it in the right values files.
+<p>If we do not automate those tasks, we will have to see which is the offline color and make all the changes in the right values files.
 However we can automate it in a pipeline. The pipelines will find the offline color, make the changes and create the pull request.</p>
 </div>
 <div class="tabset is-loading">
@@ -259,7 +259,7 @@ However we can automate it in a pipeline. The pipelines will find the offline co
 <div class="content">
 <div class="tab-pane" aria-labelledby="tabset1_manual-steps">
 <div class="paragraph">
-<p>We have to get the offline color. We can get it form Openshift or from the file 'values/products/envs/stage/non-static-networking-values.yaml' to get the color that the offline services is using. Then edit the following files in the right environment and color.</p>
+<p>We can get the offline color form Openshift service or from the file <code>values/products/envs/stage/non-static-networking-values.yaml</code>. Then edit the following files in the right environment and color.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -274,8 +274,8 @@ However we can automate it in a pipeline. The pipelines will find the offline co
 </ul>
 </div>
 <div class="paragraph">
-<p>Edit the file 'values/products/envs/stage/green/image-tag-values.yaml'
-Set this content to deploy new version v1.1.1</p>
+<p>Edit the file <code>values/products/envs/stage/green/image-tag-values.yaml</code>.
+Set this content to deploy new version <code>v1.1.1</code></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -296,7 +296,7 @@ Set this content to deploy new version v1.1.1</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Edit the file 'values/products/envs/stage/green/non-static-values.yaml'
+<p>Edit the file <code>values/products/envs/stage/green/non-static-values.yaml</code>.
 Set this content to use online backend and scale up.</p>
 </div>
 <div class="listingblock">
@@ -321,10 +321,20 @@ git push origin new-image-v1.1.1</code></pre>
 </div>
 <div class="tab-pane" aria-labelledby="tabset1_automatic-pipeline">
 <div class="paragraph">
-<p>We have created a pipeline that:
-- Get the offline color in the designed environment.
-- Change the right files to deploy a new version.
-- Commit the changes in a new branch and create a pull request</p>
+<p>We have created a pipeline that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Get the offline color in the designed environment.</p>
+</li>
+<li>
+<p>Change the right files to deploy a new version.</p>
+</li>
+<li>
+<p>Commit the changes in a new branch and create a pull request</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -384,7 +394,7 @@ spec:
 <p>Accept pull request and delete the branch.</p>
 </div>
 <div class="paragraph">
-<p>ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.</p>
+<p>ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster clicking on <code>SYNC`</code> button.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -393,7 +403,7 @@ spec:
 <div class="title">Figure 4. Argo CD - Refresh Shop</div>
 </div>
 <div class="paragraph">
-<p>This will be the Shop status:</p>
+<p>After ArgoCD synchronize, this will be the Shop status:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -402,7 +412,7 @@ spec:
 <div class="title">Figure 5. Shop step 1</div>
 </div>
 <div class="paragraph">
-<p>See that offline applications have version v1.1.1 and the new attribute description, but the online has not changed.</p>
+<p>See that offline color have version <code>v1.1.1</code> and the new attribute description, but the online has not changed.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -436,7 +446,7 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>Functional testing users can execute <code>Smoke tests</code> to validate this new v1.1.1 version.</p>
+<p>Functional testing users can execute <code>Smoke tests</code> to validate this new <code>v1.1.1</code> version.</p>
 </div>
 </div>
 </div>
@@ -527,7 +537,7 @@ Accept pull request and delete the branch.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>We have in the online environment the new version v1.1.1!!!</strong></p>
+<p><strong>We have in the online environment the new version <code>v1.1.1</code>!!!</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -631,7 +641,7 @@ Accept pull request and delete the branch.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We can see that the offline <code>Products</code> is calling offline <code>Discounts</code> and has the new version v1.1.1</p>
+<p>We can see that the offline <code>Products</code> is calling offline <code>Discounts</code> and has the new version <code>v1.1.1</code></p>
 </div>
 <div class="listingblock">
 <div class="content">

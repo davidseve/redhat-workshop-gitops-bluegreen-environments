@@ -220,7 +220,7 @@
 <h2 id="_step_1_deploy_new_version"><a class="anchor" href="#_step_1_deploy_new_version"></a>Step 1 - Deploy new version</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We will start deploying a new version <code>v1.1.1</code> in the offline color. And get it ready to received online users traffic</p>
+<p>We will start deploying a new version <code>v1.1.1</code> in the offline color. And get it ready to received online user`s traffic</p>
 </div>
 <div class="paragraph">
 <p>Those are the main tasks that we have to execute:</p>
@@ -243,7 +243,7 @@
 </div>
 <div class="paragraph">
 <p>If we do not automate those tasks, we will have to see which is the offline color and make all the changes in the right values files.
-However we can automate it in a pipeline. The pipelines will find the offline color, make the changes and create the pull request.</p>
+However, we can automate it in a pipeline. The pipelines will find the offline color, make the changes in the right values files and create the pull request.</p>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
@@ -259,7 +259,7 @@ However we can automate it in a pipeline. The pipelines will find the offline co
 <div class="content">
 <div class="tab-pane" aria-labelledby="tabset1_manual-steps">
 <div class="paragraph">
-<p>We can get the offline color form Openshift service or from the file <code>values/products/envs/stage/non-static-networking-values.yaml</code>. Then edit the following files in the right environment and color.</p>
+<p>We can get the offline color from Openshift service or from the file <code>values/products/envs/stage/non-static-networking-values.yaml</code>. Then edit the following files in the right environment and color.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -332,7 +332,7 @@ git push origin new-image-v1.1.1</code></pre>
 <p>Change the right files to deploy a new version.</p>
 </li>
 <li>
-<p>Commit the changes in a new branch and create a pull request</p>
+<p>Commit the changes in a new branch and create a pull request.</p>
 </li>
 </ul>
 </div>
@@ -394,7 +394,7 @@ spec:
 <p>Accept pull request and delete the branch.</p>
 </div>
 <div class="paragraph">
-<p>ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster clicking on <code>SYNC`</code> button.</p>
+<p>ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on <code>SYNC`</code> button.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -412,7 +412,7 @@ spec:
 <div class="title">Figure 5. Shop step 1</div>
 </div>
 <div class="paragraph">
-<p>See that offline color have version <code>v1.1.1</code> and the new attribute description, but the online has not changed.</p>
+<p>See that offline color has version <code>v1.1.1</code> and the new attribute description, but the online has not changed.</p>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -454,10 +454,20 @@ spec:
 <h2 id="_step_2_switch_new_version_to_online"><a class="anchor" href="#_step_2_switch_new_version_to_online"></a>Step 2 - Switch new version to Online</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>We are going to open the new version to final users. To do so we just have to change the online service to use the other color.</p>
+<p>We are going to open the new version to final users. To do so we just have to change the online service to use the other color that we have ready.</p>
 </div>
 <div class="paragraph">
-<p>TODO explian more</p>
+<p>Those are the main tasks that we have to execute:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the online service</p>
+</li>
+<li>
+<p>Commit the changes in a new branch and create a pull request.</p>
+</li>
+</ul>
 </div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
@@ -472,17 +482,65 @@ spec:
 </div>
 <div class="content">
 <div class="tab-pane" aria-labelledby="tabset2_manual-steps">
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">cd helm/quarkus-helm-umbrella/chart</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the online service</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>TODO</p>
+<p>Edit the file <code>values/products/envs/stage/non-static-networking-values.yaml</code>.
+Set this content to use the green color in the online service.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">productsNetworkingOnline:
+  version: green
+productsNetworkingOffline:
+  version: green</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Commit the changes in a new branch and create a pull request</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">git checkout -b switch-to-colout-green-image-v1.1.1
+git add values/products/envs/stage/non-static-networking-values.yaml
+git commit -m 'products switch online to green'
+git push origin switch-to-colout-green-image-v1.1.1</code></pre>
+</div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset2_automatic-pipeline">
 <div class="paragraph">
-<p>You can use the already created pipelinerun.</p>
+<p>We have created a pipeline that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Get the offline color in the designed environment.</p>
+</li>
+<li>
+<p>Execute an E2E test to validate the version.</p>
+</li>
+<li>
+<p>Change the right files for the online service.</p>
+</li>
+<li>
+<p>Commit the changes in a new branch and create a pull request.</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
+<pre>apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-switch-
@@ -503,7 +561,7 @@ spec:
   workspaces:
   - name: app-source
     persistentVolumeClaim:
-      claimName: workspace-pvc-shop-cd-new-version</code></pre>
+      claimName: workspace-pvc-shop-cd-new-version</pre>
 </div>
 </div>
 <div class="listingblock console-input">
@@ -515,21 +573,37 @@ spec:
 </div>
 </div>
 <div class="paragraph">
-<p>TODO explain the pull request
-TODO add image
-Accept pull request and delete the branch.</p>
+<p>You should have the following pull request:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-pr2-stage.png" alt="github pr2 stage">
+</div>
+<div class="title">Figure 6. GitHub Switch Pull Request</div>
 </div>
 <div class="paragraph">
-<p>ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.</p>
+<p>With those files changed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gihub-stage-pr2-changed.png" alt="gihub stage pr2 changed">
+</div>
+<div class="title">Figure 7. GitHub Switch Pull Request Files Changed</div>
 </div>
 <div class="paragraph">
-<p>This will be the Shop status:</p>
+<p>Accept pull request and delete the branch.</p>
+</div>
+<div class="paragraph">
+<p>ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on <code>SYNC`</code> button.</p>
+</div>
+<div class="paragraph">
+<p>After ArgoCD synchronize, this will be the Shop status:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/blue-green-step-2.png" alt="blue green step 2">
 </div>
-<div class="title">Figure 6. Shop step 2</div>
+<div class="title">Figure 8. Shop step 2</div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -537,7 +611,7 @@ Accept pull request and delete the branch.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><strong>We have in the online environment the new version <code>v1.1.1</code>!!!</strong></p>
+<p><strong>We have in the online service the new version <code>v1.1.1</code>!!!</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -566,6 +640,28 @@ Accept pull request and delete the branch.</p>
 <div class="paragraph">
 <p>Finally, when online is stable we should align offline with the new version and scale it down. Does not make sense to use the same resources that we have in online.</p>
 </div>
+<div class="paragraph">
+<p>Those are the main tasks that we have to execute:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set new tag image values in the new offline color.</p>
+</li>
+<li>
+<p>Change the application configuration values to use the offline services.</p>
+</li>
+<li>
+<p>Scale Down the new offline color.</p>
+</li>
+<li>
+<p>Change the offline service to use the new offline color.</p>
+</li>
+<li>
+<p>Commit the changes in a new branch and create a pull request.</p>
+</li>
+</ul>
+</div>
 <div class="tabset is-loading">
 <div class="ulist tabs">
 <ul>
@@ -580,12 +676,96 @@ Accept pull request and delete the branch.</p>
 <div class="content">
 <div class="tab-pane" aria-labelledby="tabset3_manual-steps">
 <div class="paragraph">
-<p>TODO</p>
+<p>We can get the new offline color from Openshift service or from the file <code>values/products/envs/stage/non-static-networking-values.yaml</code>. Then edit the following files in the right environment and color.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-sh hljs" data-lang="sh">cd helm/quarkus-helm-umbrella/chart</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Set new tag image values in the new offline color.
+Edit the file <code>values/products/envs/stage/blue/image-tag-values.yaml</code>.
+Set this content to deploy new version <code>v1.1.1</code></p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">products-blue:
+  quarkus-base:
+    image:
+      tag: v1.1.1</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the application configuration values to use the offline services.</p>
+</li>
+<li>
+<p>Scale Down the new offline color.
+Edit the file <code>values/products/envs/stage/blue/non-static-values.yaml</code>.
+Set this content to use online backend and scale up.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">products-blue:
+  quarkus-base:
+    replicaCount: 1
+  mode: offline</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Change the offline service to use the new offline color.
+Edit the file <code>values/products/envs/stage/non-static-networking-values.yaml</code>.
+Set this content to use the green color in the online service.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">productsNetworkingOnline:
+  version: green
+productsNetworkingOffline:
+  version: blue</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Commit the changes in a new branch and create a pull request</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">git checkout -b align-offline-v1.1.1
+git add values/products/envs/stage/blue
+git add values/products/envs/stage/non-static-networking-values.yaml
+git commit -m 'products-blue env stage align image tag v1.1.1'
+git push origin align-offline-v1.1.1</code></pre>
+</div>
 </div>
 </div>
 <div class="tab-pane" aria-labelledby="tabset3_automatic-pipeline">
 <div class="paragraph">
-<p>You can use the already created pipelinerun.</p>
+<p>We have created a pipeline that:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Get the offline color in the designed environment.</p>
+</li>
+<li>
+<p>Change the right files to align the color and scale down.</p>
+</li>
+<li>
+<p>Commit the changes in a new branch and create a pull request.</p>
+</li>
+</ul>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -615,25 +795,44 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-aling-offline.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-align-offline.yaml -n %USER%-continuous-deployment</code></pre>
 </div>
 </div>
 </div>
 </div>
 </div>
 <div class="paragraph">
-<p>TODO explain the pull request
-TODO add image
-Accept pull request and delete the branch.</p>
+<p>You should have the following pull request:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-pr3-stage.png" alt="github pr3 stage">
+</div>
+<div class="title">Figure 9. GitHub Align Pull Request</div>
 </div>
 <div class="paragraph">
-<p>ArgoCD will synchronize the application with the new changes. You can do it manually to make it faster.</p>
+<p>With those files changed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/gihub-stage-pr3-changed.png" alt="gihub stage pr3 changed">
+</div>
+<div class="title">Figure 10. GitHub Align Pull Request Files Changed</div>
+</div>
+<div class="paragraph">
+<p>Accept pull request and delete the branch.</p>
+</div>
+<div class="paragraph">
+<p>ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on <code>SYNC`</code> button.</p>
+</div>
+<div class="paragraph">
+<p>After ArgoCD synchronize, this will be the Shop status:</p>
 </div>
 <div class="imageblock">
 <div class="content">
 <img src="_images/blue-green-step-3.png" alt="blue green step 3">
 </div>
-<div class="title">Figure 7. Shop step 3</div>
+<div class="title">Figure 11. Shop step 3</div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
@@ -675,6 +874,9 @@ Accept pull request and delete the branch.</p>
   }
 }</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><strong>We are ready to promote the new version to production environment!!</strong></p>
 </div>
 </div>
 </div>

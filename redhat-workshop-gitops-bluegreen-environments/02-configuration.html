@@ -185,7 +185,35 @@
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">Unresolved include directive in modules/ROOT/pages/02-configuration.adoc - include::examples/cluster-configuration.yaml[]</code></pre>
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-configuration
+  namespace: openshift-gitops
+spec:
+  destination:
+    name: ''
+    namespace: openshift-gitops
+    server: 'https://kubernetes.default.svc'
+  source:
+    path: gitops/cluster-config
+    repoURL: 'https://github.com/davidseve/cloud-native-deployment-strategies.git'
+    targetRevision: HEAD
+    helm:
+      parameters:
+        - name: "users[0]"
+          value: user1
+        - name: "users[1]"
+          value: user2
+        - name: "namespaces[0]"
+          value: stage
+        - name: "namespaces[1]"
+          value: prod
+  project: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false</code></pre>
 </div>
 </div>
 <div class="paragraph">

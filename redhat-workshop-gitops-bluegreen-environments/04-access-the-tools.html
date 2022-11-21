@@ -364,6 +364,114 @@ git push origin release</code></pre>
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_5_configure_your_github_token"><a class="anchor" href="#_5_configure_your_github_token"></a>5. Configure your GitHub token</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+This section is only mandatory if you want to use the automated pipelines in the workshop.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The git pipelines that you will use to deploy and promote changes over the Stage and Production environments need to perform commits on the Git repository. This is only possible if you set up a GitHub access token with permission to do so. Currently, there are two types of GitHub Personal Access Tokens (PATs): Fine-grained tokens and Classic tokens.</p>
+</div>
+<div class="sect2">
+<h3 id="_create_your_fine_grained_github_pat"><a class="anchor" href="#_create_your_fine_grained_github_pat"></a>Create your Fine-grained GitHub PAT</h3>
+<div class="paragraph">
+<p>Fine-grained personal access tokens give developers granular control over the permissions and repository access they grant to a PAT and are the new alternative to the traditional Classic tokens. That is why we will use Fine-grained tokens.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Access the <code>New fine-grained personal access token</code> page for your GitHub account.</p>
+</li>
+<li>
+<p>Enter the following values:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Token name: <code>cloud-native-deployment-strategies</code></p>
+</li>
+<li>
+<p>Expiration: <code>7 days</code>.</p>
+</li>
+<li>
+<p>Description: None.</p>
+</li>
+<li>
+<p>Resource owner: Yourself.</p>
+</li>
+<li>
+<p>Repository access: Select <code>Only selected repositories</code> and choose the repository that you just cloned.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-token-01.png" alt="Step 1 to create a GitHub token">
+</div>
+<div class="title">Figure 7. Step 1 to create a GitHub token</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Now choose the following permissions for this token:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Contents: Access: Read and Write</code>: To allow pushing commits to the repository.</p>
+</li>
+<li>
+<p><code>Pull requests: Access: Read and Write</code>: To allow automating pull-requests creation.</p>
+<div class="imageblock">
+<div class="content">
+<img src="_images/github-token-02.png" alt="Step 2 to create a GitHub token">
+</div>
+<div class="title">Figure 8. Step 2 to create a GitHub token</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Click on <code>Generate Token</code>.</p>
+</li>
+<li>
+<p>Copy the token content, as you will not be able to see it again.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_the_openshift_secret_and_link_it"><a class="anchor" href="#_create_the_openshift_secret_and_link_it"></a>Create the Openshift secret and link it</h3>
+<div class="paragraph">
+<p>Create an environment variable with the contents of the token. The token should be a string with the following pattern <code>github_pat_</code> followed by random chars:</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">export GIT_TOKEN=&lt;your-token-here&gt;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>After that, you will just create a token with credentials to access the repository and link it to the Openshift Service Account that will run the pipelines. Using this mechanism, all the pipeline executions will contain these credentials without the need to explicitly declare them.</p>
+</div>
+<div class="listingblock console-input">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">export GIT_USER=%REPOSITORY%
+oc create secret generic github-token --from-literal=username=${GIT_USER} --from-literal=password=${GIT_TOKEN} --type "kubernetes.io/basic-auth" -n %USER%-continuous-deployment
+oc annotate secret github-token "tekton.dev/git-0=https://github.com/%REPOSITORY%" -n %USER%-continuous-deployment
+oc secrets link pipeline github-token -n %USER%-continuous-deployment</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 <nav class="pagination">
   <span class="prev"><a href="03-blue-green.html" class="query-params-link">3. Cloud Native Blue/Green Deployment Strategy</a></span>
   <span class="next"><a href="05-deploy-shop.html" class="query-params-link">5. The Shop application</a></span>

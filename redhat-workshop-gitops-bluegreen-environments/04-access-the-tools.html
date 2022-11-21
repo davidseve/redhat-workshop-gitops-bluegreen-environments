@@ -383,7 +383,7 @@ This section is only mandatory if you want to use the automated pipelines in the
 <p>The git pipelines that you will use to deploy and promote changes over the Stage and Production environments need to perform commits on the Git repository. This is only possible if you set up a GitHub access token with permission to do so. Currently, there are two types of GitHub Personal Access Tokens (PATs): Fine-grained tokens and Classic tokens.</p>
 </div>
 <div class="sect2">
-<h3 id="_create_your_fine_grained_github_pat"><a class="anchor" href="#_create_your_fine_grained_github_pat"></a>Create your Fine-grained GitHub PAT</h3>
+<h3 id="_5_1_create_your_fine_grained_github_pat"><a class="anchor" href="#_5_1_create_your_fine_grained_github_pat"></a>5.1 Create your Fine-grained GitHub PAT</h3>
 <div class="paragraph">
 <p>Fine-grained personal access tokens give developers granular control over the permissions and repository access they grant to a PAT and are the new alternative to the traditional Classic tokens. That is why we will use Fine-grained tokens.</p>
 </div>
@@ -449,7 +449,7 @@ This section is only mandatory if you want to use the automated pipelines in the
 </div>
 </div>
 <div class="sect2">
-<h3 id="_create_the_openshift_secret_and_link_it"><a class="anchor" href="#_create_the_openshift_secret_and_link_it"></a>Create the Openshift secret and link it</h3>
+<h3 id="_5_2_create_the_openshift_secret_and_link_it"><a class="anchor" href="#_5_2_create_the_openshift_secret_and_link_it"></a>5.2 Create the Openshift secret and link it</h3>
 <div class="paragraph">
 <p>Create an environment variable with the contents of the token. The token should be a string with the following pattern <code>github_pat_</code> followed by random chars:</p>
 </div>

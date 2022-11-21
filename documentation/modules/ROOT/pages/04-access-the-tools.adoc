@@ -89,3 +89,57 @@ cd cloud-native-deployment-strategies
 git checkout -b release
 git push origin release
 ----
+
+
+== 5. Configure your GitHub token
+
+NOTE: This section is only mandatory if you want to use the automated pipelines in the workshop.
+
+The git pipelines that you will use to deploy and promote changes over the Stage and Production environments need to perform commits on the Git repository. This is only possible if you set up a GitHub access token with permission to do so. Currently, there are two types of GitHub Personal Access Tokens (PATs): Fine-grained tokens and Classic tokens.
+
+=== Create your Fine-grained GitHub PAT
+
+Fine-grained personal access tokens give developers granular control over the permissions and repository access they grant to a PAT and are the new alternative to the traditional Classic tokens. That is why we will use Fine-grained tokens.
+
+1. Access the `New fine-grained personal access token` page for your GitHub account.
+2. Enter the following values:
+* Token name: `cloud-native-deployment-strategies`
+* Expiration: `7 days`.
+* Description: None.
+* Resource owner: Yourself.
+* Repository access: Select `Only selected repositories` and choose the repository that you just cloned.
++
+.Step 1 to create a GitHub token
+image::github-token-01.png["Step 1 to create a GitHub token"]
++
+3. Now choose the following permissions for this token:
+* `Contents: Access: Read and Write`: To allow pushing commits to the repository.
+* `Pull requests: Access: Read and Write`: To allow automating pull-requests creation.
++
+.Step 2 to create a GitHub token
+image::github-token-02.png["Step 2 to create a GitHub token"]
++
+4. Click on `Generate Token`.
+5. Copy the token content, as you will not be able to see it again.
+
+=== Create the Openshift secret and link it
+
+Create an environment variable with the contents of the token. The token should be a string with the following pattern `github_pat_` followed by random chars:
+
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+export GIT_TOKEN=<your-token-here>
+----
+
+After that, you will just create a token with credentials to access the repository and link it to the Openshift Service Account that will run the pipelines. Using this mechanism, all the pipeline executions will contain these credentials without the need to explicitly declare them.
+
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+export GIT_USER=%REPOSITORY%
+oc create secret generic github-token --from-literal=username=${GIT_USER} --from-literal=password=${GIT_TOKEN} --type "kubernetes.io/basic-auth" -n %USER%-continuous-deployment
+oc annotate secret github-token "tekton.dev/git-0=https://github.com/%REPOSITORY%" -n %USER%-continuous-deployment
+oc secrets link pipeline github-token -n %USER%-continuous-deployment
+----
+

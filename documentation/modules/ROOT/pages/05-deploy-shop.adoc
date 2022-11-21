@@ -24,7 +24,10 @@ helm
 └── quarkus-helm-umbrella    # Main chart that combines them all.
 ----
 
-With the previous https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies[`umbrella` structure], each chart defines a set of Openshift resources with default values. The `umbrella` chart will be our tool to combine them all and override the variables we need.
+With the previous https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies[`umbrella` structure], each chart defines a set of Openshift resources with default values. The `umbrella` chart will be our tool to combine them all and override the variables we need:
+
+.Shop app Helm Umbrella architecture
+image::shop-umbrella-helm.png["Shop app Helm Umbrella architecture"]
 
 The values of the Umbrella Chart are split into several files to allow reusability. The following piece of code shows them all:
 
@@ -118,12 +121,21 @@ image::ArgoCD-Applications.png[]
 [#04-test-deployment]
 == Test Shop in the Stage environment
 
-The following components should be deployed:
+The following components should be deployed in the stage environment:
 
 * products-blue.
 * products-green.
 * discounts-blue.
 * discounts-green.
+
+The resulting connection between these components is as follows:
+
+* Online route maps to the online services. The online services are the Blue ones.
+* Offline route maps to the offline services. The offline services are the Green ones.
+
+.Shop application deployment
+image::blue-green-step-0.png["Shop application deployment"]
+
 
 We are going to test that the routes are configured so that the offline route points to the offline deployments and the online to the online deployments.
 

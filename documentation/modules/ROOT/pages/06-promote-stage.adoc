@@ -8,15 +8,13 @@ include::_attributes.adoc[]
  
 We have split a `Cloud Native` Blue/Green deployment into three steps:
 
-1. Deploy new version.
-2. Switch new version to Online.
+1. Deploy the new version.
+2. Switch the new version to Online.
 3. Align and scale down Offline.
  
+We have already deployed the `products` version `v1.0.1` and we are ready to use a new `products` version `v1.1.1` that has a new `description` attribute.
 
- 
-We have already deployed the products version `v1.0.1`, and we are ready to use a new products version `v1.1.1` that has a new `description` attribute.
-
-First we are going to focus on *{environment_name} environment*, to validate the the new products version `v1.1.1` works properly.
+First, we are going to focus on *{environment_name} environment* to validate that the new `products` version `v1.1.1` works properly.
 
 This is our current status:
 
@@ -27,4 +25,4 @@ TODO add github token in chapter 4
 
 include::partial$promote.adoc[]
 
-*We are ready to promote the new version to production environment!!*
+*We are ready to promote the new version to the production environment!!*

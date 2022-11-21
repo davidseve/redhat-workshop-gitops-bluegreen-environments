@@ -1,12 +1,12 @@
-== Step 1 - Deploy new version
+== Step 1 - Deploy the new version
 
-We will start deploying a new version `v1.1.1` in the offline color. And get it ready to received online user`s traffic
+We will start deploying a new version `v1.1.1` in the offline color. And get it ready to receive online user's traffic
 
-Those are the main tasks that we have to execute:
+These are the main tasks that we have to execute:
 
-- Set new tag image values in the offline color.
+- Set the new image tag values in the offline color.
 - Change the application configuration values to use the online services.
-- Scale Up the offline color.
+- Scale up the offline color.
 - Commit the changes in a new branch and create a pull request.
 
 If we do not automate those tasks, we will have to see which is the offline color and make all the changes in the right values files.
@@ -29,7 +29,7 @@ cd helm/quarkus-helm-umbrella/chart
 - Set new tag image values in the offline color.
 
 Edit the file `values/products/envs/{environment}/green/image-tag-values.yaml`.
-Set this content to deploy new version `v1.1.1`
+Set its content to deploy new version `v1.1.1`
 ```yaml
 products-green:
   quarkus-base:
@@ -40,7 +40,7 @@ products-green:
 - Scale Up the offline color.
 
 Edit the file `values/products/envs/{environment}/green/non-static-values.yaml`.
-Set this content to use online backend and scale up.
+Set this content to use the online backend and scale up.
 ```yaml
 products-green:
   quarkus-base:
@@ -48,7 +48,7 @@ products-green:
   mode: online
 ```
 
-Commit the changes in a new branch and create a pull request
+Commit the changes in a new branch and push them to your repository:
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
@@ -57,15 +57,20 @@ git add values/products/envs/{environment}/green
 git commit -m 'products-green  new image tag v1.1.1'
 git push origin new-image-v1.1.1
 ----
+
+Now, create a pull request from the `new-image-v1.1.1` to the `release` branch:
+
+.Pull request notification on GitHub
+image::github-create-pr.png[]
 --
 Automatic pipeline::
 +
 --
 We have created a pipeline that:
 
-- Get the offline color in the designed environment.
-- Change the right files to deploy a new version.
-- Commit the changes in a new branch and create a pull request.
+- Gets the offline color in the designed environment.
+- Changes the right files to deploy a new version.
+- Commits the changes in a new branch and creates a pull request.
 
 [source,yaml]
 ----
@@ -90,14 +95,14 @@ With those files changed:
 .GitHub New Version Pull Request Files Changed
 image::gihub-{environment}-pr1-changed.png[]
 
-Accept pull request and delete the branch.
+Accept the pull request and delete the branch.
 
-ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on `SYNC`` button.
+ArgoCD will synchronize the application with the new changes. You can do it manually but to make it faster, click on the `SYNC` button.
 
 .Argo CD - Refresh Shop
 image::ArgoCD-Shop-Refresh.png[]
 
-After ArgoCD synchronize, this will be the Shop status:
+After ArgoCD synchronizes, this will be the Shop status:
 
 .Shop step 1
 image::blue-green-step-1.png[]
@@ -140,11 +145,11 @@ Functional testing users can execute `Smoke tests` to validate this new `v1.1.1`
 == Step 2 - Switch new version to Online
 
 
-We are going to open the new version to final users. To do so we just have to change the online service to use the other color that we have ready.
+We are going to open the new version to final users. To do so, we just have to change the online service to use the other color that we have ready.
 
-Those are the main tasks that we have to execute:
+These are the main tasks that we have to execute:
 
-- Change the online service
+- Change the online service.
 - Commit the changes in a new branch and create a pull request.
 
 include::promote-switch.adoc[]
@@ -153,13 +158,13 @@ include::promote-rollback-{environment}.adoc[]
 
 == Step 3 - Align and scale down Offline
 
-Finally, when online is stable we should align offline with the new version and scale it down. Does not make sense to use the same resources that we have in online.
+Finally, when online is stable we should align offline with the new version and scale it down. It does not make sense to use the same resources that we have in the online deployment.
 
-Those are the main tasks that we have to execute:
+These are the main tasks that we have to execute:
 
 - Set new tag image values in the new offline color.
 - Change the application configuration values to use the offline services.
-- Scale Down the new offline color.
+- Scale down the new offline color.
 - Change the offline service to use the new offline color.
 - Commit the changes in a new branch and create a pull request.
 
@@ -200,7 +205,7 @@ products-blue:
 
 - Change the offline service to use the new offline color.
 Edit the file `values/products/envs/{environment}/non-static-networking-values.yaml`.
-Set this content to use the green color in the online service.
+Set this content to use the blue color in the offline service.
 ```yaml
 productsNetworkingOnline:
   version: green
@@ -253,11 +258,9 @@ With those files changed:
 .GitHub Align Pull Request Files Changed
 image::gihub-{environment}-pr3-changed.png[]
 
-Accept pull request and delete the branch.
+Accept the pull request and delete the branch. ArgoCD will synchronize the application with the new changes. You can do it manually but, to make it faster, click on the `SYNC` button.
 
-ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on `SYNC`` button.
-
-After ArgoCD synchronize, this will be the Shop status:
+After ArgoCD synchronizes the git repository, this will be the Shop status:
 
 .Shop step 3
 image::blue-green-step-3.png[]

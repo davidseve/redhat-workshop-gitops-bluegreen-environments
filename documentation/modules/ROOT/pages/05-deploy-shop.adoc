@@ -95,6 +95,7 @@ In this section, we will create an ArgoCD `ApplicationSet` that will configure t
 
 Please, edit the following file and set your own GitHub repository in the reportURL.
 
+[.console-input]
 [source,yaml]
 ----
 include::example$argocd/applicationset-shop.yaml[]

@@ -72,6 +72,7 @@ We have created a pipeline that:
 - Changes the right files to deploy a new version.
 - Commits the changes in a new branch and creates a pull request.
 
+[.console-input]
 [source,yaml]
 ----
 include::example$run-products-{environment}/1-pipelinerun-products-new-version.yaml[]
@@ -80,7 +81,7 @@ include::example$run-products-{environment}/1-pipelinerun-products-new-version.y
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 1-pipelinerun-products-new-version.yaml -n {user}-continuous-deployment
+oc create -f 1-pipelinerun-products-new-version.yaml
 ----
 --
 ====
@@ -234,6 +235,7 @@ We have created a pipeline that:
 - Change the right files to align the color and scale down.
 - Commit the changes in a new branch and create a pull request.
 
+[.console-input]
 [source,yaml]
 ----
 include::example$run-products-{environment}/3-pipelinerun-products-align-offline.yaml[]
@@ -242,7 +244,7 @@ include::example$run-products-{environment}/3-pipelinerun-products-align-offline
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 3-pipelinerun-products-align-offline.yaml -n {user}-continuous-deployment
+oc create -f 3-pipelinerun-products-align-offline.yaml
 ----
 --
 ====

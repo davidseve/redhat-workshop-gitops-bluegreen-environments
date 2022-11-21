@@ -1,6 +1,6 @@
 == Step 2,5 - Rollback
 
-Imagine that something goes wrong, we know that this never happens but just in case. We can do a very `quick rollback` just undoing the change in the `Products` online service. But, are we sure that with all the pressure that we will have at this moment, we will find the right service and change the label to the right color? Let's move this pressure to the pipeline. 
+Imagine that something goes wrong, we know that this never happens but just in case. We can do a very `quick rollback` just by undoing the change in the `Products` online service. But, are we sure that with all the pressure that we will have at this moment, we will find the right service and change the label to the right color? Let's move this pressure to the pipeline. 
 
 Those are the main tasks that we have to execute:
 
@@ -49,6 +49,8 @@ We have created a pipeline that:
 - Get the offline color in the designed environment.
 - Change the right files for the online service.
 - Commit the changes in a new branch and create a pull request.
+
+[.console-input]
 [source,yaml]
 ----
 include::example$run-products-{environment}/2-pipelinerun-products-switch-rollback.yaml[]
@@ -57,7 +59,7 @@ include::example$run-products-{environment}/2-pipelinerun-products-switch-rollba
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 2-pipelinerun-products-switch-rollback.yaml -n {user}-continuous-deployment
+oc create -f 2-pipelinerun-products-switch-rollback.yaml
 ----
 --
 ====
@@ -72,11 +74,9 @@ With those files changed:
 .GitHub Rollback Pull Request Files Changed
 image::gihub-{environment}-pr2-5-changed.png[]
 
-Accept pull request and delete the branch.
+Accept the pull request and delete the branch. ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, click on the `SYNC` button.
 
-ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on `SYNC`` button.
-
-After ArgoCD synchronize, this will be the Shop status:
+After ArgoCD synchronizes the repository, this will be the Shop status:
 
 .Shop step 2.5
 image::blue-green-step-2-5.png[]

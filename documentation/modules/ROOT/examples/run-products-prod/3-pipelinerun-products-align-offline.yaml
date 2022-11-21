@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-align-offline-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments      

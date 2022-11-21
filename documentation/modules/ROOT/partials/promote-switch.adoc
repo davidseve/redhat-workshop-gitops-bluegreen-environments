@@ -43,6 +43,8 @@ We have created a pipeline that:
 - Execute an E2E test to validate the version.
 - Change the right files for the online service.
 - Commit the changes in a new branch and create a pull request.
+
+[.console-input]
 [source,yaml]
 ----
 include::example$run-products-{environment}/2-pipelinerun-products-switch.yaml[]
@@ -51,7 +53,7 @@ include::example$run-products-{environment}/2-pipelinerun-products-switch.yaml[]
 [.console-input]
 [source,input,subs="+macros,+attributes"]
 ----
-oc create -f 2-pipelinerun-products-switch.yaml -n {user}-continuous-deployment
+oc create -f 2-pipelinerun-products-switch.yaml
 ----
 --
 ====

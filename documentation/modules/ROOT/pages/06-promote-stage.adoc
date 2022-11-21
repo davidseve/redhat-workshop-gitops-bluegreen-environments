@@ -21,8 +21,6 @@ This is our current status:
 .Shop initial status
 image::blue-green-step-0.png[]
 
-TODO add github token in chapter 4
-
 include::partial$promote.adoc[]
 
 *We are ready to promote the new version to the production environment!!*

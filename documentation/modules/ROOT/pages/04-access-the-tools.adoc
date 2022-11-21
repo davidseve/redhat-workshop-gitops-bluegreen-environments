@@ -97,7 +97,7 @@ NOTE: This section is only mandatory if you want to use the automated pipelines 
 
 The git pipelines that you will use to deploy and promote changes over the Stage and Production environments need to perform commits on the Git repository. This is only possible if you set up a GitHub access token with permission to do so. Currently, there are two types of GitHub Personal Access Tokens (PATs): Fine-grained tokens and Classic tokens.
 
-=== Create your Fine-grained GitHub PAT
+=== 5.1 Create your Fine-grained GitHub PAT
 
 Fine-grained personal access tokens give developers granular control over the permissions and repository access they grant to a PAT and are the new alternative to the traditional Classic tokens. That is why we will use Fine-grained tokens.
 
@@ -122,7 +122,7 @@ image::github-token-02.png["Step 2 to create a GitHub token"]
 4. Click on `Generate Token`.
 5. Copy the token content, as you will not be able to see it again.
 
-=== Create the Openshift secret and link it
+=== 5.2 Create the Openshift secret and link it
 
 Create an environment variable with the contents of the token. The token should be a string with the following pattern `github_pat_` followed by random chars:
 

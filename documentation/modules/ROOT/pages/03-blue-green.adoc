@@ -14,7 +14,7 @@ Applications have their own life cycle, so we should be able to execute independ
 
 *Blue-green deployment* is a strategy for updating running computer systems with *minimal downtime*. The operator maintains two environments, dubbed blue and green. One serves production traffic (the version all users use), while the other is updated.
 
-The old version is the blue environment, while the new version is the green environment. Once all the *production traffic is fully transferred from blue to green*, blue can be kept as-is for a possible rollback or be updated to become the template upon which the next update is made.
+For instance, the old version is the blue environment, while the new version is the green environment. Once all the *production traffic is fully transferred from blue to green*, blue can be kept as-is for a possible rollback or be updated to become the template upon which the next update is made.
 
 * Advantages:
 ** Minimize downtime.
@@ -40,7 +40,7 @@ In this example, we have two versions up and running in production: online and o
 
 image::blue-green-01-initial.png[]
 
-When a new version is ready for the real users, we only have to modify the k8s service to point to the new deployment (Green) as in the following image. There is minimum downtime and we can do a rapid rollback just by undoing the changes in the service.
+When a new version is ready for the real users, we only have to modify the k8s service to point to the new deployment (Green) as in the following image. There is minimal downtime and we can do a rapid rollback just by undoing the changes in the service.
 
 image::blue-green-02-switch.png[]
 

@@ -40,7 +40,7 @@ Each user will have its own three namespaces.
 
 == 2. Openshift - Web Console
 
-Access the https://console-openshift-console.apps.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com/k8s/cluster/projects[OCP web console^] and login with your assigned username and password:
+Access the https://console-openshift-console.apps.%CLUSTER%/k8s/cluster/projects[OCP web console^] and login with your assigned username and password:
 
 * Username: {user}.
 * Password: `openshift`.

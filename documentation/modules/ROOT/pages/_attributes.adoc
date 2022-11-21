@@ -1,8 +1,4 @@
 :experimental:
 :source-highlighter: highlightjs
-
-:cluster_api: %CLUSTER_API%
 :user: %USER%
-
-// TODO
-:CLUSTER_API: https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443
+:cluster_api: https://api.%CLUSTER%:6443

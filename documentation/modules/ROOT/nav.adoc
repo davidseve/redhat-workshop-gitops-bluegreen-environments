@@ -4,9 +4,13 @@
 *** xref:01-setup.adoc#01-parameters[1.2.1 Parameters]
 *** xref:01-setup.adoc#01-accessconsole[1.2.2 Access - OCP Console]
 
-TODO
-
 * xref:02-configuration.adoc[2. Environments installation and configuration]
+** xref:02-configuration.adoc#02-argocd-application[2.1 ArgoCD application]
+** xref:02-configuration.adoc#02-argocd-projects[ArgoCD Projects]
+** xref:02-configuration.adoc#02-ocp-namespaces[Openshift namespaces]
+** xref:02-configuration.adoc#02-ocp-pipelines[Openshift Pipelines]
+** xref:02-configuration.adoc#02-summary[Summary]
+
 
 * xref:03-blue-green.adoc[3. Cloud Native Blue/Green Deployment Strategy]
 ** xref:03-blue-green.adoc#03-microservices-architecture[3.1 Microservices Architecture]

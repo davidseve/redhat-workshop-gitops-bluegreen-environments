@@ -224,7 +224,13 @@
 </div>
 </div>
 <div class="paragraph">
-<p>With the previous <a href="https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies"><code>umbrella</code> structure</a>, each chart defines a set of Openshift resources with default values. The <code>umbrella</code> chart will be our tool to combine them all and override the variables we need.</p>
+<p>With the previous <a href="https://helm.sh/docs/howto/charts_tips_and_tricks/#complex-charts-with-many-dependencies"><code>umbrella</code> structure</a>, each chart defines a set of Openshift resources with default values. The <code>umbrella</code> chart will be our tool to combine them all and override the variables we need:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/shop-umbrella-helm.png" alt="Shop app Helm Umbrella architecture">
+</div>
+<div class="title">Figure 2. Shop app Helm Umbrella architecture</div>
 </div>
 <div class="paragraph">
 <p>The values of the Umbrella Chart are split into several files to allow reusability. The following piece of code shows them all:</p>
@@ -390,7 +396,7 @@ spec:
 <div class="content">
 <img src="_images/ArgoCD-Applications.png" alt="ArgoCD Applications">
 </div>
-<div class="title">Figure 2. Argo CD - Shop applications</div>
+<div class="title">Figure 3. Argo CD - Shop applications</div>
 </div>
 </div>
 </div>
@@ -398,7 +404,7 @@ spec:
 <h2 id="04-test-deployment"><a class="anchor" href="#04-test-deployment"></a>Test Shop in the Stage environment</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>The following components should be deployed:</p>
+<p>The following components should be deployed in the stage environment:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -415,6 +421,25 @@ spec:
 <p>discounts-green.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>The resulting connection between these components is as follows:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Online route maps to the online services. The online services are the Blue ones.</p>
+</li>
+<li>
+<p>Offline route maps to the offline services. The offline services are the Green ones.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/blue-green-step-0.png" alt="Shop application deployment">
+</div>
+<div class="title">Figure 4. Shop application deployment</div>
 </div>
 <div class="paragraph">
 <p>We are going to test that the routes are configured so that the offline route points to the offline deployments and the online to the online deployments.</p>

@@ -319,12 +319,13 @@ git push origin new-image-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-new-version-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments    
@@ -351,7 +352,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -526,12 +527,13 @@ git push origin switch-to-colout-green-image-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
-<pre>apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-switch-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments   
@@ -551,12 +553,12 @@ spec:
   workspaces:
   - name: app-source
     persistentVolumeClaim:
-      claimName: workspace-pvc-shop-cd-new-version</pre>
+      claimName: workspace-pvc-shop-cd-new-version</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -625,7 +627,7 @@ spec:
 <h2 id="_step_25_rollback"><a class="anchor" href="#_step_25_rollback"></a>Step 2,5 - Rollback</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Imagine that something goes wrong, we know that this never happens but just in case. We can do a very <code>quick rollback</code> just undoing the change in the <code>Products</code> online service. But, are we sure that with all the pressure that we will have at this moment, we will find the right service and change the label to the right color? Let&#8217;s move this pressure to the pipeline.</p>
+<p>Imagine that something goes wrong, we know that this never happens but just in case. We can do a very <code>quick rollback</code> just by undoing the change in the <code>Products</code> online service. But, are we sure that with all the pressure that we will have at this moment, we will find the right service and change the label to the right color? Let&#8217;s move this pressure to the pipeline.</p>
 </div>
 <div class="paragraph">
 <p>Those are the main tasks that we have to execute:</p>
@@ -706,12 +708,13 @@ git push origin rollback-online</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
-<pre>apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-rollback-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments      
@@ -729,12 +732,12 @@ spec:
   workspaces:
   - name: app-source
     persistentVolumeClaim:
-      claimName: workspace-pvc-shop-cd-new-version</pre>
+      claimName: workspace-pvc-shop-cd-new-version</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch-rollback.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch-rollback.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -759,13 +762,10 @@ spec:
 <div class="title">Figure 10. GitHub Rollback Pull Request Files Changed</div>
 </div>
 <div class="paragraph">
-<p>Accept pull request and delete the branch.</p>
+<p>Accept the pull request and delete the branch. ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, click on the <code>SYNC</code> button.</p>
 </div>
 <div class="paragraph">
-<p>ArgoCD will synchronize the application with the new changes. You can do it manually, to make it faster, clicking on <code>SYNC`</code> button.</p>
-</div>
-<div class="paragraph">
-<p>After ArgoCD synchronize, this will be the Shop status:</p>
+<p>After ArgoCD synchronizes the repository, this will be the Shop status:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -874,12 +874,13 @@ git push origin switch-to-colout-green-image-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
-<pre>apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-switch-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments   
@@ -899,12 +900,12 @@ spec:
   workspaces:
   - name: app-source
     persistentVolumeClaim:
-      claimName: workspace-pvc-shop-cd-new-version</pre>
+      claimName: workspace-pvc-shop-cd-new-version</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -1102,12 +1103,13 @@ git push origin align-offline-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-align-offline-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments      
@@ -1132,7 +1134,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-align-offline.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-align-offline.yaml</code></pre>
 </div>
 </div>
 </div>

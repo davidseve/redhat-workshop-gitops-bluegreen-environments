@@ -225,9 +225,6 @@
 </div>
 <div class="title">Figure 1. Shop initial status</div>
 </div>
-<div class="paragraph">
-<p>TODO add github token in chapter 4</p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -359,12 +356,13 @@ git push origin new-image-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-new-version-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments    
@@ -389,7 +387,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 1-pipelinerun-products-new-version.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -564,12 +562,13 @@ git push origin switch-to-colout-green-image-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
-<pre>apiVersion: tekton.dev/v1beta1
+<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-switch-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments   
@@ -587,12 +586,12 @@ spec:
   workspaces:
   - name: app-source
     persistentVolumeClaim:
-      claimName: workspace-pvc-shop-cd-new-version</pre>
+      claimName: workspace-pvc-shop-cd-new-version</code></pre>
 </div>
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 2-pipelinerun-products-switch.yaml</code></pre>
 </div>
 </div>
 </div>
@@ -790,12 +789,13 @@ git push origin align-offline-v1.1.1</code></pre>
 </li>
 </ul>
 </div>
-<div class="listingblock">
+<div class="listingblock console-input">
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   generateName: shop-products-align-offline-
+  namespace: %USER%-continuous-deployment
 spec:
   pipelineRef:
     name: pipeline-blue-green-environments      
@@ -818,7 +818,7 @@ spec:
 </div>
 <div class="listingblock console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-align-offline.yaml -n %USER%-continuous-deployment</code></pre>
+<pre class="highlightjs highlight"><code class="language-input hljs" data-lang="input">oc create -f 3-pipelinerun-products-align-offline.yaml</code></pre>
 </div>
 </div>
 </div>

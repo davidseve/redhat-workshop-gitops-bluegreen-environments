@@ -92,12 +92,26 @@
   </li>
 </ul>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-configuration.html">2. Environments installation and configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-argocd-application">2.1 ArgoCD application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-argocd-projects">ArgoCD Projects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-ocp-namespaces">Openshift namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-ocp-pipelines">Openshift Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-summary">Summary</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -181,7 +195,7 @@
 <h2 id="01-prerequisites"><a class="anchor" href="#01-prerequisites"></a>Prerequisites</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>During this tutorial, it will be required to work with different tools for running the exercises included. Please install the following software:</p>
+<p>During this tutorial, will be required to work with different tools for running the exercises included. Please install the following software:</p>
 </div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
@@ -252,7 +266,7 @@ Please review the official documentation to install the latest versions of these
 <p><a href="https://argoproj.github.io/argo-cd/">ArgoCD</a> is a declarative, GitOps continuous delivery tool for Kubernetes following the GitOps pattern of using Git repositories as the source of truth for defining the desired application state. Argo CD automates the deployment of the desired application states in the specified target environments. Application deployments can track updates to branches, tags, or pinned to a specific version of manifests at a Git commit.</p>
 </li>
 <li>
-<p><a href="https://helm.sh/">Helm</a> is a tool to find, share, and use software built for Kubernetes. Helm helps users manage Kubernetes applications in terms of definition, installing, and upgrading even the most complex Kubernetes application.</p>
+<p><a href="https://helm.sh/">Helm</a> is a tool to find, share, and use software built for Kubernetes. Helm helps users manage Kubernetes applications in terms of definition, installing, and upgrading even the most complex Kubernetes applications.</p>
 </li>
 <li>
 <p><a href="https://tekton.dev/">Tekton</a> (Red Hat Pipelines Operator) is a powerful and flexible open-source framework for creating CI/CD systems, allowing developers to build, test, and deploy across cloud providers and on-premise systems.</p>
@@ -263,7 +277,7 @@ Please review the official documentation to install the latest versions of these
 <p>During this tutorial, a set of resources are provided by the instructor in order to be able to complete the exercises described in the following sections. The main objective of these resources is to provide a platform, multiple templates and other resources which are required to create different objects in Openshift.</p>
 </div>
 <div class="paragraph">
-<p>Please review the following list to have an overall understanding about the resources provided for completing this tutorial:</p>
+<p>Please review the following list to have an overall understanding of the resources provided for completing this tutorial:</p>
 </div>
 <div class="ulist">
 <ul>
@@ -271,7 +285,7 @@ Please review the official documentation to install the latest versions of these
 <p>An Openshift cluster that will host and make available a set of applications deployed</p>
 </li>
 <li>
-<p>An ArgoCD installation which will allow attendees to deploy applications in a GitOps fashion</p>
+<p>An ArgoCD installation that allows attendees to deploy applications in a GitOps fashion</p>
 </li>
 <li>
 <p>A Tekton installation that will control the applications lifecycle automatically</p>
@@ -287,77 +301,54 @@ Please review the official documentation to install the latest versions of these
 <div class="sect2">
 <h3 id="01-parameters"><a class="anchor" href="#01-parameters"></a>Parameters</h3>
 <div class="paragraph">
-<p>The instructor provides the users the necessary Openshift credentials and other important parameters at the beginning of this tutorial in order to access and complete the laboratory.</p>
+<p>The instructor provides the users with the necessary Openshift credentials and other important parameters at the beginning of this tutorial to access and complete the laboratory.</p>
 </div>
 <div class="paragraph">
 <p>The following table includes the parameters that the instructor should provide you at the beginning of the laboratory:</p>
 </div>
-<div class="paragraph">
-<p>TODO</p>
-</div>
 <table class="tableblock frame-all grid-all stretch">
 <colgroup>
-<col style="width: 33.3333%;">
-<col style="width: 33.3333%;">
-<col style="width: 33.3334%;">
+<col style="width: 50%;">
+<col style="width: 50%;">
 </colgroup>
 <thead>
 <tr>
 <th class="tableblock halign-center valign-top"><strong>Name</strong></th>
-<th class="tableblock halign-center valign-top"><strong>Reference</strong></th>
-<th class="tableblock halign-center valign-top"><strong>Example</strong></th>
+<th class="tableblock halign-center valign-top"><strong>Value</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Openshift Cluster API (Access CLI)</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;ocp_cluster_api&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://api.cicdgitopsworkshop.sandbox507.opentlc.com:6443" class="bare">https://api.cicdgitopsworkshop.sandbox507.opentlc.com:6443</a></em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://api.%CLUSTER%:6443" class="bare">https://api.%CLUSTER%:6443</a></em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Openshift Cluster Console</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;ocp_cluster_console&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com" class="bare">https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com</a></em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://console-openshift-console.apps.%CLUSTER%" class="bare">https://console-openshift-console.apps.%CLUSTER%</a></em></p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Username</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;username&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">user1</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%USER%</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">Password</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;pass&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">P4ssw0rd</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">openshift</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">App Namespace</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;user_namespace&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">user1-jump-app</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">App Namespace Stage</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%USER%-stage</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">CI/CD Namespace</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;user_namespace_cicd&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">user1-jump-app-cicd</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">App Namespace Production</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%USER%-prod</p></td>
 </tr>
 <tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">Openshift Apps Domain</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;openshift_apps_domain&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><em>apps.cicdgitopsworkshop.sandbox507.opentlc.com</em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">Continuous Deployment Namespace</p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock">%USER%-continuous-deployment</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-center valign-top"><p class="tableblock">ArgoCD console</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;argocd_console_url&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://argocd-gitops-argocd.cicdgitopsworkshop.sandbox507.opentlc.com" class="bare">https://argocd-gitops-argocd.cicdgitopsworkshop.sandbox507.opentlc.com</a></em></p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">ArgoCD Project</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;argocd_project&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">jump-app</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-center valign-top"><p class="tableblock">ArgoCD Openshift Cluster</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock">&lt;argocd_ocp_cluster_api&gt;</p></td>
-<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://kubernetes.default.svc" class="bare">https://kubernetes.default.svc</a></em></p></td>
+<td class="tableblock halign-center valign-top"><p class="tableblock"><em><a href="https://openshift-gitops-server-openshift-gitops.apps.%CLUSTER%" class="bare">https://openshift-gitops-server-openshift-gitops.apps.%CLUSTER%</a></em></p></td>
 </tr>
 </tbody>
 </table>
@@ -365,12 +356,12 @@ Please review the official documentation to install the latest versions of these
 <div class="sect2">
 <h3 id="01-accessconsole"><a class="anchor" href="#01-accessconsole"></a>Access - OCP Console</h3>
 <div class="paragraph">
-<p>In addition, access Openshift Console using your credentials via browser in order to check connectivity and accessibility to the console:</p>
+<p>In addition, access Openshift Console using your credentials via browser to check connectivity and accessibility to the console:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>&lt;ocp_cluster_console&gt; (<em>E.g. <a href="https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com" class="bare">https://console-openshift-console.apps.cicdgitopsworkshop.sandbox507.opentlc.com</a></em>)</p>
+<p><em><a href="https://console-openshift-console.apps.%CLUSTER%" class="bare">https://console-openshift-console.apps.%CLUSTER%</a></em></p>
 </li>
 </ul>
 </div>

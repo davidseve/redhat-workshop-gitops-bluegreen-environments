@@ -92,12 +92,26 @@
   </li>
 </ul>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-configuration.html">2. Environments installation and configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-argocd-application">2.1 ArgoCD application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-argocd-projects">ArgoCD Projects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-ocp-namespaces">Openshift namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-ocp-pipelines">Openshift Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-summary">Summary</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item is-current-page" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -195,7 +209,7 @@
 <p><strong>Blue-green deployment</strong> is a strategy for updating running computer systems with <strong>minimal downtime</strong>. The operator maintains two environments, dubbed blue and green. One serves production traffic (the version all users use), while the other is updated.</p>
 </div>
 <div class="paragraph">
-<p>The old version is the blue environment, while the new version is the green environment. Once all the <strong>production traffic is fully transferred from blue to green</strong>, blue can be kept as-is for a possible rollback or be updated to become the template upon which the next update is made.</p>
+<p>For instance, the old version is the blue environment, while the new version is the green environment. Once all the <strong>production traffic is fully transferred from blue to green</strong>, blue can be kept as-is for a possible rollback or be updated to become the template upon which the next update is made.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -255,7 +269,7 @@
 </div>
 </div>
 <div class="paragraph">
-<p>When a new version is ready for the real users, we only have to modify the k8s service to point to the new deployment (Green) as in the following image. There is minimum downtime and we can do a rapid rollback just by undoing the changes in the service.</p>
+<p>When a new version is ready for the real users, we only have to modify the k8s service to point to the new deployment (Green) as in the following image. There is minimal downtime and we can do a rapid rollback just by undoing the changes in the service.</p>
 </div>
 <div class="imageblock">
 <div class="content">

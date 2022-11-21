@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
+    <title>Environments installation and configuration :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
     <link rel="canonical" href="https://davidseve.github.io/redhat-workshop-gitops-bluegreen-environments/redhat-workshop-gitops-bluegreen-environments/02-configuration.html">
     <link rel="prev" href="01-setup.html">
     <link rel="next" href="03-blue-green.html">
@@ -92,12 +92,26 @@
   </li>
 </ul>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item is-current-page" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-configuration.html">2. Environments installation and configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#02-argocd-application">2.1 ArgoCD application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#02-argocd-projects">ArgoCD Projects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#02-ocp-namespaces">Openshift namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#02-ocp-pipelines">Openshift Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="#02-summary">Summary</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -176,12 +190,12 @@
   </div>
   <div class="content">
 <article class="doc">
+<h1 class="page">Environments installation and configuration</h1>
+<div class="sect1">
+<h2 id="02-argocd-application"><a class="anchor" href="#02-argocd-application"></a>ArgoCD application</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
-</div>
-<h1 id="_environments_installation_and_configuration" class="sect0"><a class="anchor" href="#_environments_installation_and_configuration"></a>Environments installation and configuration</h1>
-<div class="paragraph">
-<p>We have used GitOps to install the cluster. This is the ArgoCD applications that we have used:</p>
+<p>We have used GitOps to install the cluster. This is the ArgoCD application that we have used:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -216,14 +230,66 @@ spec:
       selfHeal: false</code></pre>
 </div>
 </div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ArgoCD-application-cluster.png" alt="ArgoCD application cluster">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="02-argocd-projects"><a class="anchor" href="#02-argocd-projects"></a>ArgoCD Projects</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>This application use a Helm chart that install:</p>
+<p>We have also configured ArgoCD to manage different users with different privileges. We have created one ArgoCD AppProject per user:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ArgoCD-ProyectApp.png" alt="ArgoCD AppProject per user">
+</div>
+</div>
+<div class="paragraph">
+<p>Each user in ArgoCD can not see the other user`s ArgoCD AppProject.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="02-ocp-namespaces"><a class="anchor" href="#02-ocp-namespaces"></a>Openshift namespaces</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>For each user, we have created 3 namespaces. Two for the environments stage and prod, and one for the continuous deployment pipelines:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>operator <strong>Openshift Pipelines</strong>.</p>
+<p>%USER%-stage</p>
 </li>
+<li>
+<p>%USER%-prod</p>
+</li>
+<li>
+<p>%USER%-continuous-deployment</p>
+</li>
+</ul>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="_images/ocp_console_projects.png" alt="OCP web console projects view">
+</div>
+</div>
+<div class="paragraph">
+<p>Each user in Openshift can not see the other user`s namespaces.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="02-ocp-pipelines"><a class="anchor" href="#02-ocp-pipelines"></a>Openshift Pipelines</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>We install the Openshift Pipelines Operator and all the necessary pipelines and tasks for continuous deployment:</p>
+</div>
+<div class="ulist">
+<ul>
 <li>
 <p>cluster role <code>tekton-admin-view</code>.</p>
 </li>
@@ -237,24 +303,22 @@ spec:
 <p>Tekton cluster role.</p>
 </li>
 <li>
-<p>Tekton tasks for git and Openshift clients.
-TODO add cluster-configuration image</p>
+<p>Tekton tasks for git and Openshift clients.</p>
 </li>
 </ul>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="02-summary"><a class="anchor" href="#02-summary"></a>Summary</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>We have also configure ArgoCD to manage different user with different privileges. We have created one ArgoCD AppProject per user:
-TODO add image ArgoCD ProjectApp</p>
+<p>The objective is to isolate the user as if they were teams that are working in the same cluster. And we do not want one team that can see the other team`s applications.</p>
 </div>
 <div class="paragraph">
-<p>For each user we have created 3 namespaces. Two for the environments stage and prod, and one for the continuos deployment pipelines:
- - %USER%-stage
- - %USER%-prod
- - %USER%-continuous-deployment
-TODO add image namespaces</p>
+<p>This is an example of how we can use ArgoCD RBAC and Openshift namespaces. But each organization should design its more suitable approach.</p>
 </div>
-<div class="paragraph">
-<p>The objective is isolate the user like if they where teams that are working in the same cluster. And we don not want one team that is able to see the other team`s applications.</p>
+</div>
 </div>
 <nav class="pagination">
   <span class="prev"><a href="01-setup.html" class="query-params-link">1. Environment Setup</a></span>

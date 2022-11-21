@@ -92,12 +92,26 @@
   </li>
 </ul>
   </li>
-</ul>
-  </li>
-  <li class="nav-item" data-depth="0">
-<ul class="nav-list">
   <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-configuration.html">2. Environments installation and configuration</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-argocd-application">2.1 ArgoCD application</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-argocd-projects">ArgoCD Projects</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-ocp-namespaces">Openshift namespaces</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-ocp-pipelines">Openshift Pipelines</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="02-configuration.html#02-summary">Summary</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
@@ -211,7 +225,7 @@
 </div>
 <div class="listingblock lines_space console-input">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u %USER% -p openshift https://api.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com:6443</code></pre>
+<pre class="highlightjs highlight"><code class="language-bash hljs" data-lang="bash">oc login -u %USER% -p openshift https://api.%CLUSTER%:6443</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -260,7 +274,7 @@ Please pay special attention to <em>oc CLI</em>  because you will need to use th
 <h2 id="_2_openshift_web_console"><a class="anchor" href="#_2_openshift_web_console"></a>2. Openshift - Web Console</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>Access the <a href="https://console-openshift-console.apps.cluster-pdlf2.pdlf2.sandbox2869.opentlc.com/k8s/cluster/projects" target="_blank" rel="noopener">OCP web console</a> and login with your assigned username and password:</p>
+<p>Access the <a href="https://console-openshift-console.apps.%CLUSTER%/k8s/cluster/projects" target="_blank" rel="noopener">OCP web console</a> and login with your assigned username and password:</p>
 </div>
 <div class="ulist">
 <ul>

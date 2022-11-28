@@ -27,3 +27,6 @@
 * xref:06-promote-stage.adoc[6. Promote new version to Stage environment]
 
 * xref:07-promote-production.adoc[7. Promote new version to Production environment]
+
+* xref:08-conclusion.adoc[8. Conclusion]
+

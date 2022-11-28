@@ -3,10 +3,9 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Environments installation and configuration :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
-    <link rel="canonical" href="https://davidseve.github.io/redhat-workshop-gitops-bluegreen-environments/redhat-workshop-gitops-bluegreen-environments/02-configuration.html">
-    <link rel="prev" href="01-setup.html">
-    <link rel="next" href="03-blue-green.html">
+    <title>Conclusion :: Red Hat Workshop - GitOps &amp; Blue/Green &amp; Promotion between environments</title>
+    <link rel="canonical" href="https://davidseve.github.io/redhat-workshop-gitops-bluegreen-environments/redhat-workshop-gitops-bluegreen-environments/08-conclusion.html">
+    <link rel="prev" href="07-promote-production.html">
     <meta name="generator" content="Antora 3.0.0">
     <link rel="stylesheet" href="../_/css/site.css">
 <link rel="icon" href="../_/img/favicon.ico" type="image/x-icon">
@@ -92,24 +91,24 @@
   </li>
 </ul>
   </li>
-  <li class="nav-item is-current-page" data-depth="1">
+  <li class="nav-item" data-depth="1">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="02-configuration.html">2. Environments installation and configuration</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#02-argocd-application">2.1 ArgoCD application</a>
+    <a class="nav-link" href="02-configuration.html#02-argocd-application">2.1 ArgoCD application</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#02-argocd-projects">ArgoCD Projects</a>
+    <a class="nav-link" href="02-configuration.html#02-argocd-projects">ArgoCD Projects</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#02-ocp-namespaces">Openshift namespaces</a>
+    <a class="nav-link" href="02-configuration.html#02-ocp-namespaces">Openshift namespaces</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#02-ocp-pipelines">Openshift Pipelines</a>
+    <a class="nav-link" href="02-configuration.html#02-ocp-pipelines">Openshift Pipelines</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="#02-summary">Summary</a>
+    <a class="nav-link" href="02-configuration.html#02-summary">Summary</a>
   </li>
 </ul>
   </li>
@@ -152,7 +151,7 @@
   <li class="nav-item" data-depth="1">
     <a class="nav-link" href="07-promote-production.html">7. Promote new version to Production environment</a>
   </li>
-  <li class="nav-item" data-depth="1">
+  <li class="nav-item is-current-page" data-depth="1">
     <a class="nav-link" href="08-conclusion.html">8. Conclusion</a>
   </li>
 </ul>
@@ -186,146 +185,89 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Workshop</a></li>
-    <li><a href="02-configuration.html">2. Environments installation and configuration</a></li>
+    <li><a href="08-conclusion.html">8. Conclusion</a></li>
   </ul>
 </nav>
-  <div class="edit-this-page"><a href="https://github.com/davidseve/redhat-workshop-gitops-bluegreen-environments/edit/master/documentation/modules/ROOT/pages/02-configuration.adoc">Edit this Page</a></div>
+  <div class="edit-this-page"><a href="https://github.com/davidseve/redhat-workshop-gitops-bluegreen-environments/edit/master/documentation/modules/ROOT/pages/08-conclusion.adoc">Edit this Page</a></div>
   </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">Environments installation and configuration</h1>
-<div class="sect1">
-<h2 id="02-argocd-application"><a class="anchor" href="#02-argocd-application"></a>ArgoCD application</h2>
-<div class="sectionbody">
+<h1 class="page">Conclusion</h1>
 <div class="paragraph">
-<p>We have used GitOps to install the cluster. This is the ArgoCD application that we have used:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-yaml hljs" data-lang="yaml">apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: cluster-configuration
-  namespace: openshift-gitops
-spec:
-  destination:
-    name: ''
-    namespace: openshift-gitops
-    server: 'https://kubernetes.default.svc'
-  source:
-    path: gitops/cluster-config
-    repoURL: 'https://github.com/davidseve/cloud-native-deployment-strategies.git'
-    targetRevision: HEAD
-    helm:
-      parameters:
-        - name: "users[0]"
-          value: user1
-        - name: "users[1]"
-          value: user2
-        - name: "namespaces[0]"
-          value: stage
-        - name: "namespaces[1]"
-          value: prod
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: false</code></pre>
-</div>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/ArgoCD-application-cluster.png" alt="ArgoCD application cluster">
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="02-argocd-projects"><a class="anchor" href="#02-argocd-projects"></a>ArgoCD Projects</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We have also configured ArgoCD to manage different users with different privileges. We have created one ArgoCD AppProject per user:</p>
-</div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/ArgoCD-ProyectApp.png" alt="ArgoCD AppProject per user">
-</div>
+<p>You made it! Or you jumped to this section. Anyways, congratulations. Before you leave, we want to emphasize the main outcomes of this workshop.</p>
 </div>
 <div class="paragraph">
-<p>Each user in ArgoCD can not see the other user`s ArgoCD AppProject.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="02-ocp-namespaces"><a class="anchor" href="#02-ocp-namespaces"></a>Openshift namespaces</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>For each user, we have created 3 namespaces. Two for the environments stage and prod, and one for the continuous deployment pipelines:</p>
+<p>First, GitOps has four principles:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>%USER%-stage</p>
+<p>The system is described declaratively.</p>
 </li>
 <li>
-<p>%USER%-prod</p>
+<p>The desired state is versioned in Git.</p>
 </li>
 <li>
-<p>%USER%-continuous-deployment</p>
+<p>Approved changes can be applied automatically.</p>
+</li>
+<li>
+<p>A controller exists to detect and act on a drift.</p>
 </li>
 </ul>
 </div>
-<div class="imageblock">
-<div class="content">
-<img src="_images/ocp_console_projects.png" alt="OCP web console projects view">
-</div>
-</div>
 <div class="paragraph">
-<p>Each user in Openshift can not see the other user`s namespaces.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="02-ocp-pipelines"><a class="anchor" href="#02-ocp-pipelines"></a>Openshift Pipelines</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>We install the Openshift Pipelines Operator and all the necessary pipelines and tasks for continuous deployment:</p>
+<p>Second, the Blue/Green deployment strategy helps organizations to :</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>cluster role <code>tekton-admin-view</code>.</p>
+<p>Minimize downtime during upgrades, as the new version is ready before receiving traffic.</p>
 </li>
 <li>
-<p>role binding for ArgoCD and Pipelines to the namespaces.</p>
+<p>It provides a quick way to roll back, as it keeps the previous version running until making sure that the new version is correct.</p>
 </li>
 <li>
-<p><code>pipelines-blue-green-environment</code> the pipelines that we will see later for Blue/Green deployment.</p>
-</li>
-<li>
-<p>Tekton cluster role.</p>
-</li>
-<li>
-<p>Tekton tasks for git and Openshift clients.</p>
+<p>It allows executing smoke tests in the same environment where the application will run.</p>
 </li>
 </ul>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="02-summary"><a class="anchor" href="#02-summary"></a>Summary</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>The objective is to isolate the user as if they were teams that are working in the same cluster. And we do not want one team that can see the other team`s applications.</p>
+<p>Third, Continuous Delivery is the way that your organization can:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Automate the Software Release Process, from the build to the tests, to deploy in the acceptance environment.</p>
+</li>
+<li>
+<p>Improve Developer Productivity, as all the deployment is automated.</p>
+</li>
+<li>
+<p>Deliver Updates Faster, as you will always have a deployment-ready build artifact that has passed a standardized test process.</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>This is an example of how we can use ArgoCD RBAC and Openshift namespaces. But each organization should design its more suitable approach.</p>
+<p>We hope you enjoyed the workshop and want to deepen into these concepts. For this reason, here you can find links to dive in these topics:</p>
 </div>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://openpracticelibrary.com/practice/gitops/">GitOps in the Open Practice Library</a>.</p>
+</li>
+<li>
+<p><a href="https://openpracticelibrary.com/practice/continuous-delivery/">Continuous Delivery in the Open Practice Library</a></p>
+</li>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.11/cicd/gitops/understanding-openshift-gitops.html">Openshift GitOps documentation</a>.</p>
+</li>
+<li>
+<p><a href="https://docs.openshift.com/container-platform/4.11/cicd/pipelines/understanding-openshift-pipelines.html">Openshift Pipelines documentation</a>.</p>
+</li>
+</ul>
 </div>
 <nav class="pagination">
-  <span class="prev"><a href="01-setup.html" class="query-params-link">1. Environment Setup</a></span>
-  <span class="next"><a href="03-blue-green.html" class="query-params-link">3. Cloud Native Blue/Green Deployment Strategy</a></span>
+  <span class="prev"><a href="07-promote-production.html" class="query-params-link">7. Promote new version to Production environment</a></span>
 </nav>
 </article>
 <aside class="toc sidebar" data-title="Contents" data-levels="2">

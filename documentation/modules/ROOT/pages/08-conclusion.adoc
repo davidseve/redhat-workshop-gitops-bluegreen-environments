@@ -4,26 +4,26 @@ include::_attributes.adoc[]
 
 You made it! Or you jumped to this section. Anyways, congratulations. Before you leave, we want to emphasize the main outcomes of this workshop.
 
-First, GitOps has four principles:
+First, *GitOps has four principles*:
 
 * The system is described declaratively.
 * The desired state is versioned in Git.
 * Approved changes can be applied automatically.
 * A controller exists to detect and act on a drift.
 
-Second, the Blue/Green deployment strategy helps organizations to :
+Second, the *Blue/Green deployment strategy* helps organizations to :
 
 * Minimize downtime during upgrades, as the new version is ready before receiving traffic.
 * It provides a quick way to roll back, as it keeps the previous version running until making sure that the new version is correct.
 * It allows executing smoke tests in the same environment where the application will run.
 
-Third, Continuous Delivery is the way that your organization can:
+Third, *Continuous Delivery* is the way that your organization can:
 
 * Automate the Software Release Process, from the build to the tests, to deploy in the acceptance environment.
 * Improve Developer Productivity, as all the deployment is automated.
 * Deliver Updates Faster, as you will always have a deployment-ready build artifact that has passed a standardized test process. 
 
-We hope you enjoyed the workshop and want to deepen into these concepts. For this reason, here you can find links to dive in these topics:
+We hope you enjoyed the workshop and want to deepen into these concepts. For this reason, here you can find links to dive into these topics:
 
 * https://openpracticelibrary.com/practice/gitops/[GitOps in the Open Practice Library].
 * https://openpracticelibrary.com/practice/continuous-delivery/[Continuous Delivery in the Open Practice Library]

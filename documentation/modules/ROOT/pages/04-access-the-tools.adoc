@@ -69,31 +69,63 @@ If the login is successful, you will see the home screen where your applications
 image::argocd_applications.png["ArgoCD applications"]
 
 
-== 4. Clone the GitOps repository
 
-Following the GitOps practices, all the deployment configuration is stored in the git repo. We have created an initial repository that you will change to configure your deployment. As part of the demo, you will have to do some changes and commits. Fork the repository and clone it in your local machine, as you don't have write permissions on the initial git repo.
 
-1. Access the https://github.com/davidseve/cloud-native-deployment-strategies[cloud-native-deployment-strategies] repository and fork it on your GitHub account. If prompted, choose to fork the `main` branch.
-2. Now, in your forked repository, go to `Settings > General > Pull Requests` and configure the repo to `Automatically delete head branches` after a PR is merged.
-+
-.ArgoCD login screen
-image::argocd_github_pr_delete_branch.png["ArgoCD login screen"]
-+
-3. Finally, clone the repository and change to a new branch `release` using the following commands: 
+== 4. Set up your GitOps repository
 
-[.console-input]
-[source,input,subs="+macros,+attributes"]
-----
-git clone https://github.com/%REPOSITORY%/cloud-native-deployment-strategies
-cd cloud-native-deployment-strategies
-git checkout -b release
-git push origin release
-----
+Following the GitOps practices, *all the deployment configuration is stored in the git repo*. We have created an initial repository that you will change to configure your deployment. As part of the demo, you will have to do some changes and commits. Fork the repository, as you don't have write permissions on the initial git repo.
+
+=== 4.1. Fork the initial repository
+
+Access the https://github.com/davidseve/cloud-native-deployment-strategies[cloud-native-deployment-strategies] repository and fork it on your GitHub account. This will be your `gitops` repository for your application. The deployment configuration in the repository will be synced to Openshift.
+
+
+.What is a Fork?
+[NOTE]
+====
+A fork is a copy of a repository that you manage. Forks let you make changes to a project without affecting the original repository. You can fetch updates from or submit changes to the original repository with pull requests.
+====
+
+
+.Click to fork the repository
+image::github-repo-fork-01.png["Click to fork the repository"]
+
+On the forking page, leave the config as shown in the screenshot and click `Fork`:
+
+.GitHub fork repository process
+image::github-repo-fork-02.png["GitHub fork repository process"]
+
+If prompted, choose to fork the `main` branch.
+
+.How to know if it worked?
+[TIP]
+====
+The original link to the repository was `https://github.com/davidseve/cloud-native-deployment-strategies`, but after forking, you should be in a different URL and it should contain your GitHub name. This means that the repository is yours and that you have `write` permissions. For example, the user `alvarlop` will have its repository here:
+
+    https://github.com/alvarolop/cloud-native-deployment-strategies
+====
+
+=== 4.2. Configure your repository
+
+Now, in your forked repository, go to `Settings > General > Pull Requests` and configure the repo to `Automatically delete head branches` after a PR is merged. This is a best practice in Git. We also need it for our pipelines if you want to run the same step several times.
+
+.Configure the repo to autodelete branches
+image::github_pr_delete_branch.png["Configure the repo to autodelete branches"]
+
+
 
 
 == 5. Configure your GitHub token
 
-NOTE: This section is only mandatory if you want to use the automated pipelines in the workshop.
+.Why do I need this?
+[TIP]
+====
+In this section, you will generate a GitHub token for two tasks:
+
+* The automated pipelines will use it to authenticate to GitHub and modify the git repository.
+* You will use it if you clone the repository using the HTTPS method instead of SSH.
+====
+
 
 The git pipelines that you will use to deploy and promote changes over the Stage and Production environments need to perform commits on the Git repository. This is only possible if you set up a GitHub access token with permission to do so. Currently, there are two types of GitHub Personal Access Tokens (PATs): Fine-grained tokens and Classic tokens.
 
@@ -101,26 +133,28 @@ The git pipelines that you will use to deploy and promote changes over the Stage
 
 Fine-grained personal access tokens give developers granular control over the permissions and repository access they grant to a PAT and are the new alternative to the traditional Classic tokens. That is why we will use Fine-grained tokens.
 
-1. Access the `New fine-grained personal access token` page for your GitHub account.
-2. Enter the following values:
+1. Access the https://github.com/settings/tokens?type=beta[`New fine-grained personal access token` page for your GitHub account].
+2. Click on `Generate new token`.
++
+3. Enter the following values:
 * Token name: `cloud-native-deployment-strategies`
 * Expiration: `7 days`.
-* Description: None.
+* Description: `Token to manage my cloud-native-deployment-strategies repository from automation pipelines`.
 * Resource owner: Yourself.
 * Repository access: Select `Only selected repositories` and choose the repository that you just cloned.
 +
 .Step 1 to create a GitHub token
 image::github-token-01.png["Step 1 to create a GitHub token"]
 +
-3. Now choose the following permissions for this token:
+4. Now choose the following permissions for this token:
 * `Contents: Access: Read and Write`: To allow pushing commits to the repository.
 * `Pull requests: Access: Read and Write`: To allow automating pull-requests creation.
 +
 .Step 2 to create a GitHub token
 image::github-token-02.png["Step 2 to create a GitHub token"]
 +
-4. Click on `Generate Token`.
-5. Copy the token content, as you will not be able to see it again.
+5. Click on `Generate Token`.
+6. Copy the token content, as you will not be able to see it again. You will need it later *on several occasions*.
 
 === 5.2 Create the Openshift secret and link it
 
@@ -143,3 +177,42 @@ oc annotate secret github-token "tekton.dev/git-0=https://github.com/%REPOSITORY
 oc secrets link pipeline github-token -n %USER%-continuous-deployment
 ----
 
+
+== 6. Clone and add a new branch
+
+Finally, clone the repository, generate a new local branch named `release` and push it to GitHub using the following commands: 
+
+[.console-input]
+[source,input,subs="+macros,+attributes"]
+----
+git clone https://github.com/%REPOSITORY%/cloud-native-deployment-strategies
+cd cloud-native-deployment-strategies
+git checkout -b release
+git push origin release
+----
+
+When you execute the fourth command, you will be prompted for a username and password. The username will be the same as %REPOSITORY%, while the password will be the PAT that you generated previously.
+
+.How to know if it worked?
+[TIP]
+====
+This is probably the *most important step of this chapter*. So, make sure that it worked!!
+
+The last command has to create a new branch in the GitHub repository. The output should be similar to the one that follows:
+
+[source, console]
+----
+git push origin release
+Username for 'https://github.com': alvarolop
+Password for 'https://alvarolop@github.com': 
+Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
+remote: 
+remote: Create a pull request for 'release' on GitHub by visiting:
+remote:      https://github.com/alvarolop/cloud-native-deployment-strategies/pull/new/release
+remote: 
+To https://github.com/alvarolop/cloud-native-deployment-strategies
+ * [new branch]      release -> release
+----
+
+You can also check that the branch is created in the web console. Go to the `branches` section of your repository (https://github.com/%REPOSITORY%/cloud-native-deployment-strategies/branches) and check that there are two branches: `main` and `release`.
+====
